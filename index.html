@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>circuitcore -- PCB analysis suite</title>
+<meta name="description" content="Open-source PCB analysis suite. SI, PI, EMI, multiphysics from a .kicad_pcb.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="banner">
+    <div class="banner-inner">
+        <div class="title">
+            <h1>circuitcore</h1>
+            <p class="tagline">PCB analysis suite for the modern open-source EDA stack</p>
+        </div>
+    </div>
+</header>
+
+<nav class="topnav">
+    <ul>
+        <li><a href="#news" class="current">News</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#docs">Docs</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="https://github.com/UnsignedChad/circuitcore">GitHub</a></li>
+    </ul>
+</nav>
+
+<main class="container">
+
+    <aside class="sidebar">
+        <div class="sidebox">
+            <h3>circuitcore</h3>
+            <ul>
+                <li><a href="#about">What it is</a></li>
+                <li><a href="#kits">The kits</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="#build">Build from source</a></li>
+                <li><a href="#docs">Documentation</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebox">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="https://github.com/UnsignedChad/circuitcore">Source on GitHub</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/issues">Bug tracker</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/blob/main/PLANNED.md">Roadmap</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/blob/main/LICENSE">License (GPL-3.0)</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebox">
+            <h3>Status</h3>
+            <p class="status-line">Linux build: <span class="ok">passing</span></p>
+            <p class="status-line">Windows build: <span class="wip">in progress</span></p>
+            <p class="status-line">Tests: <span class="ok">717 passing</span></p>
+        </div>
+    </aside>
+
+    <section class="content">
+
+        <article id="news" class="newsblock">
+            <h2>News</h2>
+
+            <div class="entry">
+                <h3>Windows port: in progress</h3>
+                <p class="date">2026-05-27</p>
+                <p>
+                    First-pass Windows build is being landed in waves. vcpkg
+                    manifest is in main; AMI loader uses LoadLibrary on
+                    Windows now; VTK's bundled fmt is patched around a
+                    deprecated stdext::checked_array_iterator that VS 18
+                    Insiders dropped. Linux remains the daily driver until
+                    the Windows build finishes its first green pass.
+                </p>
+            </div>
+
+            <div class="entry">
+                <h3>mpkit: multiphysics tab + 3D viewer</h3>
+                <p class="date">2026-05-26</p>
+                <p>
+                    mpkit ships its first end-to-end story: voxelize the
+                    board, run a steady-state heat solve from a pdnkit IR
+                    drop, visualise the resulting temperature on copper in
+                    a COMSOL-style VTK viewer. Per-component dissipation,
+                    package-defaults height lookup, and an extruded body
+                    actor came in the same wave.
+                </p>
+            </div>
+
+            <div class="entry">
+                <h3>Audit + cleanup pass</h3>
+                <p class="date">2026-05-27</p>
+                <p>
+                    Eight PRs landed across the codebase: kEps0 / kMu0
+                    consolidated into circuitcore::field, PcbParser
+                    documented as exception-free at the API boundary,
+                    canonical Bounds2 helpers replacing five ad-hoc bbox
+                    structs, stale docs and v0/v1 comments scrubbed,
+                    unused intent library deleted.
+                </p>
+            </div>
+        </article>
+
+        <article id="about" class="newsblock">
+            <h2>What is it</h2>
+            <p>
+                <strong>circuitcore</strong> is an open-source PCB analysis
+                suite that consumes a KiCad <code>.kicad_pcb</code> directly
+                and runs the kind of signal-integrity, power-integrity, EMI
+                and multiphysics analyses you would otherwise pay six figures
+                for. Five tabs in one Qt6 desktop shell, one shared board
+                model, headless CLI for each kit, GPL-3.0 throughout.
+            </p>
+            <p>
+                The design philosophy: trust the board file, skip the
+                schematic ceremony, ship analytical solvers where the math
+                is closed-form, and reach for FEM / FDTD only where the
+                physics actually demands it.
+            </p>
+        </article>
+
+        <article id="kits" class="newsblock">
+            <h2>The kits</h2>
+            <table class="kits">
+                <tr>
+                    <th>sikit</th>
+                    <td>Signal integrity. Trace impedance (Wadell + FDM),
+                        differential pairs, stat-eye, crosstalk, Touchstone
+                        + IBIS-AMI, return-path checks, FDTD3D.</td>
+                </tr>
+                <tr>
+                    <th>pdnkit</th>
+                    <td>Power integrity. IR-drop FVM, cavity Z(f),
+                        decoupling-cap optimiser, plane resonances, MOR,
+                        transient PDN.</td>
+                </tr>
+                <tr>
+                    <th>emikit</th>
+                    <td>EMI pre-compliance. Loop emissions, common-mode
+                        cable model, CISPR / FCC masks, ground-bounce
+                        envelope.</td>
+                </tr>
+                <tr>
+                    <th>mpkit</th>
+                    <td>Multiphysics. Voxel hex mesh, steady-state and
+                        transient heat, linear elasticity, thermoelectric
+                        post-processor, IR-drop &rarr; Joule coupling.</td>
+                </tr>
+                <tr>
+                    <th>studio</th>
+                    <td>Unified Qt6 GUI. Five tabs (Board / SI / PI / EMI /
+                        Mp), one shared BoardModel, drag-and-drop a
+                        .kicad_pcb to start.</td>
+                </tr>
+            </table>
+        </article>
+
+        <article id="download" class="newsblock">
+            <h2>Download</h2>
+            <p>
+                No prebuilt binaries yet. Clone from source while the
+                Windows port settles:
+            </p>
+            <pre><code>git clone https://github.com/UnsignedChad/circuitcore.git
+cd circuitcore
+cmake -B build -G Ninja
+cmake --build build -j 8
+ctest --test-dir build</code></pre>
+            <p>
+                See the <a href="#build">build section</a> below for
+                platform-specific dependencies.
+            </p>
+        </article>
+
+        <article id="build" class="newsblock">
+            <h2>Build from source</h2>
+
+            <h3>Linux (Debian / Ubuntu)</h3>
+            <pre><code>sudo apt install qt6-base-dev qt6-base-dev-tools \
+    libqt6opengl6-dev libeigen3-dev libspdlog-dev \
+    libcli11-dev catch2 libsuitesparse-dev \
+    cmake ninja-build g++-13</code></pre>
+
+            <h3>Windows (Visual Studio + vcpkg)</h3>
+            <p>
+                Open the repo as a CMake project in Visual Studio 2022 or
+                later. With the vcpkg toolchain wired in (Project &rarr;
+                CMake Settings &rarr; CMake toolchain file pointing at
+                <code>C:/vcpkg/scripts/buildsystems/vcpkg.cmake</code>), the
+                <code>vcpkg.json</code> manifest in the repo root auto-installs
+                Qt6, Eigen, spdlog, CLI11 and Catch2 on the first configure.
+                Enable Windows long-path support before building or the VTK
+                fetch will hit MAX_PATH.
+            </p>
+        </article>
+
+        <article id="docs" class="newsblock">
+            <h2>Documentation</h2>
+            <p>
+                Per-kit READMEs live alongside the source. Architecture
+                notes for the bigger pieces (mpkit, pdnkit) live in
+                <code>docs/</code>.
+            </p>
+            <ul>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/sikit">sikit/</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/pdnkit">pdnkit/</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/emikit">emikit/</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/mpkit">mpkit/</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/blob/main/docs/mpkit_DESIGN.md">mpkit architecture</a></li>
+            </ul>
+        </article>
+
+        <article id="community" class="newsblock">
+            <h2>Community</h2>
+            <p>
+                Bug reports, feature requests and patches go through the
+                GitHub repo. Pull requests welcome -- no CLA, just a
+                Signed-off-by line if you'd like one.
+            </p>
+            <ul>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/issues">Open an issue</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/pulls">Open a pull request</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/discussions">Discussions</a></li>
+            </ul>
+        </article>
+
+    </section>
+</main>
+
+<footer>
+    <p>
+        circuitcore is free software, licensed under GPL-3.0.
+        Source on <a href="https://github.com/UnsignedChad/circuitcore">GitHub</a>.
+    </p>
+</footer>
+
+</body>
+</html>

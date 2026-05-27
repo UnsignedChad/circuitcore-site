@@ -1,0 +1,233 @@
+/* circuitcore site -- notepad++ layout, dark theme.
+   Font stack matches notepad-plus-plus.org so the visual rhythm is
+   the same; only the palette differs. */
+
+/* ---- reset / base ---- */
+* { box-sizing: border-box; }
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #d8d8d8;
+    background: #1a1a1a;
+}
+
+a {
+    color: #e08544;
+    text-decoration: none;
+}
+a:hover {
+    color: #ffb070;
+    text-decoration: underline;
+}
+
+code, pre {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
+pre {
+    background: #111;
+    color: #d0d0d0;
+    border: 1px solid #2a2a2a;
+    padding: 10px 14px;
+    overflow-x: auto;
+    border-radius: 2px;
+}
+code {
+    background: #232323;
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: #e8c280;
+}
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+/* ---- top banner ---- */
+.banner {
+    background: linear-gradient(180deg, #2a1a10 0%, #1a1010 100%);
+    border-bottom: 2px solid #c87030;
+    padding: 22px 0 18px 0;
+}
+.banner-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.banner h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: bold;
+    color: #f0a060;
+    letter-spacing: -0.5px;
+}
+.banner .tagline {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #aaa;
+    font-style: italic;
+}
+
+/* ---- top nav ---- */
+.topnav {
+    background: #2a2a2a;
+    border-bottom: 1px solid #3a3a3a;
+}
+.topnav ul {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 12px;
+    list-style: none;
+    display: flex;
+}
+.topnav li { margin: 0; }
+.topnav a {
+    display: block;
+    padding: 9px 16px;
+    color: #cfcfcf;
+    font-weight: bold;
+    font-size: 13px;
+    border-right: 1px solid #3a3a3a;
+}
+.topnav a:hover {
+    background: #353535;
+    color: #ffb070;
+    text-decoration: none;
+}
+.topnav a.current {
+    background: #1a1a1a;
+    color: #f0a060;
+}
+
+/* ---- main layout ---- */
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    padding: 24px 20px 40px 20px;
+}
+
+/* ---- sidebar ---- */
+.sidebar { font-size: 13px; }
+.sidebox {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 2px;
+    margin-bottom: 18px;
+}
+.sidebox h3 {
+    margin: 0;
+    padding: 8px 12px;
+    background: #2c2c2c;
+    color: #f0a060;
+    font-size: 13px;
+    font-weight: bold;
+    border-bottom: 1px solid #383838;
+    letter-spacing: 0.3px;
+}
+.sidebox ul {
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+}
+.sidebox li { margin: 0; }
+.sidebox a {
+    display: block;
+    padding: 4px 12px;
+    color: #ccc;
+}
+.sidebox a:hover {
+    background: #2a2a2a;
+    color: #ffb070;
+    text-decoration: none;
+}
+.status-line {
+    margin: 4px 12px;
+    color: #aaa;
+}
+.ok  { color: #6fbf6f; font-weight: bold; }
+.wip { color: #d4a04a; font-weight: bold; }
+
+/* ---- content area ---- */
+.content { min-width: 0; }
+
+.newsblock {
+    background: #202020;
+    border: 1px solid #2c2c2c;
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+}
+.newsblock h2 {
+    margin: 0 0 14px 0;
+    color: #f0a060;
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 1px solid #383838;
+    padding-bottom: 6px;
+}
+.newsblock h3 {
+    margin: 14px 0 4px 0;
+    color: #e6e0d4;
+    font-size: 16px;
+}
+
+.entry { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px dashed #2a2a2a; }
+.entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.entry h3 { margin: 0 0 2px 0; color: #f0a060; }
+.entry .date {
+    margin: 0 0 8px 0;
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+}
+.entry p { margin: 0 0 6px 0; }
+
+/* ---- kits table ---- */
+table.kits {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+}
+table.kits th, table.kits td {
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #2c2c2c;
+}
+table.kits th {
+    width: 90px;
+    color: #f0a060;
+    font-weight: bold;
+    font-family: Consolas, "Courier New", monospace;
+    background: #1c1c1c;
+}
+table.kits tr:last-child th,
+table.kits tr:last-child td { border-bottom: none; }
+
+/* ---- footer ---- */
+footer {
+    border-top: 1px solid #2a2a2a;
+    background: #161616;
+    padding: 16px 20px;
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+}
+footer a { color: #c08050; }
+
+/* ---- responsive ---- */
+@media (max-width: 760px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    .topnav ul { flex-wrap: wrap; }
+    .topnav a { padding: 8px 12px; }
+    .banner h1 { font-size: 28px; }
+}
