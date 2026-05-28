@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>circuitcore tests -- every Catch2 test case</title>
+<meta name="description" content="Every Catch2 TEST_CASE in the circuitcore repository, one line per test.">
+<link rel="stylesheet" href="style.css">
+<style>
+/* tests-page-specific overrides */
+.tests-content { max-width: 100%; }
+.tests-content h2 {
+    margin-top: 0;
+}
+.file-block {
+    background: #1c1c1c;
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    padding: 12px 18px;
+    margin: 10px 0 18px 0;
+}
+.file-block > h3 {
+    margin: 0 0 8px 0;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    color: #d4a04a;
+    letter-spacing: 0;
+    font-weight: normal;
+    border-bottom: 1px dotted #333;
+    padding-bottom: 4px;
+}
+.test-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.test-list li {
+    padding: 5px 0 5px 14px;
+    border-left: 2px solid #2a2a2a;
+    margin-bottom: 3px;
+    font-size: 13.5px;
+    line-height: 1.45;
+}
+.test-list li:hover {
+    border-left-color: #c87030;
+    background: #1f1f1f;
+}
+.test-list strong {
+    color: #e8c280;
+    font-weight: bold;
+}
+.test-list code {
+    background: #2a2a2a;
+    color: #9fbfd4;
+    padding: 0px 5px;
+    font-size: 12px;
+}
+.toc {
+    font-size: 12.5px;
+}
+.toc-counts {
+    color: #888;
+    font-size: 11px;
+}
+.intro-block {
+    background: #202020;
+    border: 1px solid #2c2c2c;
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+}
+.intro-block p { margin: 0 0 8px 0; }
+.intro-block .stats {
+    color: #d4a04a;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 12px;
+}
+#searchbox {
+    width: 100%;
+    padding: 8px 10px;
+    background: #161616;
+    color: #e0e0e0;
+    border: 1px solid #3a3a3a;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+#searchbox:focus { outline: 1px solid #c87030; }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header class="banner">
+    <div class="banner-inner">
+        <div class="title">
+            <h1>circuitcore</h1>
+            <p class="tagline">PCB analysis suite for the modern open-source EDA stack</p>
+        </div>
+    </div>
+</header>
+
+<nav class="topnav">
+    <ul>
+        <li><a href="index.html">News</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#download">Download</a></li>
+        <li><a href="index.html#docs">Docs</a></li>
+        <li><a href="tests.html" class="current">Tests</a></li>
+        <li><a href="index.html#community">Community</a></li>
+        <li><a href="https://github.com/UnsignedChad/circuitcore">GitHub</a></li>
+    </ul>
+</nav>
+
+<main class="container">
+
+    <aside class="sidebar">
+        <div class="sidebox">
+            <h3>Jump to kit</h3>
+            <ul class="toc">
+                <li><a href="#board-circuitcore-board-core">board (circuitcore::board core) <span class="toc-counts">(18)</span></a></li>
+                <li><a href="#sexpr-circuitcore-sexpr-s-expression-parser">sexpr (circuitcore::sexpr s-expression parser) <span class="toc-counts">(18)</span></a></li>
+                <li><a href="#netlist-circuitcore-netlist-kicad-netlist-parser">netlist (circuitcore::netlist + kicad netlist parser) <span class="toc-counts">(5)</span></a></li>
+                <li><a href="#formats-kicad-pcb-gmsh-msh-writers">formats (kicad pcb + gmsh msh writers) <span class="toc-counts">(19)</span></a></li>
+                <li><a href="#ui-circuitcore-ui-camera-meshers">ui (circuitcore::ui camera + meshers) <span class="toc-counts">(62)</span></a></li>
+                <li><a href="#sikit-signal-integrity">sikit (signal integrity) <span class="toc-counts">(382)</span></a></li>
+                <li><a href="#pdnkit-power-delivery-network">pdnkit (power delivery network) <span class="toc-counts">(128)</span></a></li>
+                <li><a href="#emikit-electromagnetic-interference">emikit (electromagnetic interference) <span class="toc-counts">(37)</span></a></li>
+                <li><a href="#mpkit-multiphysics">mpkit (multiphysics) <span class="toc-counts">(44)</span></a></li>
+            </ul>
+        </div>
+
+        <div class="sidebox">
+            <h3>Search</h3>
+            <div style="padding: 8px 12px;">
+                <input id="searchbox" type="search" placeholder="filter tests..." autocomplete="off">
+                <p class="status-line" id="searchcount" style="margin: 0;">713 tests shown</p>
+            </div>
+        </div>
+
+        <div class="sidebox">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="https://github.com/UnsignedChad/circuitcore">Source on GitHub</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/sikit/tests">sikit/tests/</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/pdnkit/tests">pdnkit/tests/</a></li>
+                <li><a href="https://github.com/UnsignedChad/circuitcore/tree/main/mpkit/tests">mpkit/tests/</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <section class="content tests-content">
+
+        <div class="intro-block">
+            <h2 style="margin-top: 0;">Test suite</h2>
+            <p>713 test cases across 105 files. Every Catch2 TEST_CASE in the
+repository, grouped by source file. The grouping mirrors the kit
+the tests cover.</p>
+            <p class="stats">713 test cases across 105 files. Every Catch2 TEST_CASE in the repository.</p>
+        </div>
+
+        <article id="board-circuitcore-board-core" class="newsblock">
+            <h2>board (circuitcore::board core)</h2>
+            <div class="file-block" id="pdnkit-tests-hit-test-cpp">
+                <h3>pdnkit/tests/hit_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>hittest: empty board misses</strong> <code>[hittest]</code> &mdash; calls <code>at_point</code> on a default Board; asserts the returned Hit kind is None.</li>
+                    <li><strong>hittest: zone polygon hit</strong> <code>[hittest]</code> &mdash; builds a board with one F.Cu layer and a 100x100mm zone on net 5; asserts a probe at (0.05, 0.05) returns a Zone hit with net_id 5 and layer 0, and a probe outside returns None.</li>
+                    <li><strong>hittest: zone hole is treated as not-inside</strong> <code>[hittest]</code> &mdash; adds a zone with a square hole; asserts a probe inside the hole misses and a probe outside the hole but inside the outline hits the zone.</li>
+                    <li><strong>hittest: segment hit within width/2 + pick radius</strong> <code>[hittest]</code> &mdash; places a 1mm-wide segment; asserts an on-centerline probe hits, a 0.6mm-off probe with zero pick radius misses, and the same probe with a 0.2mm pick radius hits with the segment&#x27;s net.</li>
+                    <li><strong>hittest: via hit within outer radius</strong> <code>[hittest]</code> &mdash; adds a via with 0.8mm outer diameter; asserts probes within the outer radius return Via and a probe beyond it returns None.</li>
+                    <li><strong>hittest: pad takes priority over zone</strong> <code>[hittest]</code> &mdash; overlays a pad on a covering zone; asserts the hit at the pad center returns Pad with the pad&#x27;s net_id, not the zone&#x27;s.</li>
+                    <li><strong>hittest: name() handles all kinds</strong> <code>[hittest]</code> &mdash; asserts <code>hittest::name()</code> returns &quot;pad&quot;, &quot;via&quot;, &quot;segment&quot;, &quot;zone&quot; and &quot;&quot; for None.</li>
+                    <li><strong>hittest: rect pad respects width/height + rotation</strong> <code>[hittest]</code> &mdash; places a 4x1mm rect pad at origin; asserts hits inside the wide and tall extents, misses beyond them.</li>
+                    <li><strong>hittest: rect pad rotated 90deg swaps W/H sensitivity</strong> <code>[hittest]</code> &mdash; rotates the same pad 90 degrees; asserts the long axis now follows Y and the short axis follows X.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-model-test-cpp">
+                <h3>pdnkit/tests/model_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>model: empty board defaults</strong> <code>[model]</code> &mdash; constructs an empty Board; asserts nets, segments, vias, zones and stackup layers are empty and total_thickness defaults to 1.6mm.</li>
+                    <li><strong>model: find_net by id and name</strong> <code>[model]</code> &mdash; adds three nets; asserts <code>find_net(1)</code> and <code>find_net_by_name(&quot;+3V3&quot;)</code> return the expected entries and lookups for missing ids/names return nullptr.</li>
+                    <li><strong>model: find_layer and is_copper</strong> <code>[model]</code> &mdash; adds F.Cu, B.Cu and F.SilkS layers; asserts <code>find_layer</code> returns the right names by ordinal, a missing ordinal returns nullptr, and <code>is_copper()</code> is true for F.Cu/B.Cu and false for F.SilkS.</li>
+                    <li><strong>model: polygon with holes</strong> <code>[model]</code> &mdash; builds a zone polygon with one square hole; asserts the polygon retains one filled region with four outline vertices and one hole of four vertices.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-package-defaults-test-cpp">
+                <h3>pdnkit/tests/package_defaults_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>package defaults: chip resistors / caps recognised</strong> <code>[package-defaults]</code> &mdash; looks up R_0402; asserts body height lands in 0.30..0.60 mm and that C_0805 is taller than C_0402.</li>
+                    <li><strong>package defaults: ICs differentiated by family</strong> <code>[package-defaults]</code> &mdash; looks up QFN-32, SOIC-8 and DIP-14; asserts QFN &gt; 0 and SOIC &gt; QFN and DIP &gt; SOIC.</li>
+                    <li><strong>package defaults: connectors get a tall body</strong> <code>[package-defaults]</code> &mdash; looks up a 2.54mm pin header; asserts body height is greater than 5mm.</li>
+                    <li><strong>package defaults: unknown footprint returns generic default</strong> <code>[package-defaults]</code> &mdash; queries an unknown footprint name; asserts body height is exactly 1.0mm and mass is 0.1g.</li>
+                    <li><strong>package defaults: mass scales roughly with size</strong> <code>[package-defaults]</code> &mdash; asserts mass(R_0402) &lt; mass(R_1206) and mass(SOIC-8) &lt; mass(DIP-14).</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="sexpr-circuitcore-sexpr-s-expression-parser" class="newsblock">
+            <h2>sexpr (circuitcore::sexpr s-expression parser)</h2>
+            <div class="file-block" id="sexpr-tests-sexpr-test-cpp">
+                <h3>sexpr/tests/sexpr_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>sexpr: empty list</strong> <code>[sexpr]</code> &mdash; parses &quot;()&quot;; asserts the node is a list with no children.</li>
+                    <li><strong>sexpr: single symbol in list</strong> <code>[sexpr]</code> &mdash; parses &quot;(kicad_pcb)&quot;; asserts the child is a symbol with text &quot;kicad_pcb&quot; and <code>tag()</code> returns the same.</li>
+                    <li><strong>sexpr: numbers (int, float, negative)</strong> <code>[sexpr]</code> &mdash; parses a list of seven mixed numerics; asserts each child carries the expected double value (incl. 1e3 -&gt; 1000).</li>
+                    <li><strong>sexpr: strings with escapes</strong> <code>[sexpr]</code> &mdash; parses a net form with escaped quotes and tab; asserts the unescaped strings round-trip into <code>text</code>.</li>
+                    <li><strong>sexpr: nested lists</strong> <code>[sexpr]</code> &mdash; parses &quot;(a (b (c 1) (d 2)) e)&quot;; asserts each nesting level reports the right tag and the deepest number is 1.0.</li>
+                    <li><strong>sexpr: KiCad-flavored snippet</strong> <code>[sexpr]</code> &mdash; parses a representative kicad_pcb fragment; asserts root tag is kicad_pcb, version is 20240108, layers contain two rows and the empty net name parses as an empty string atom.</li>
+                    <li><strong>sexpr: line comments are ignored</strong> <code>[sexpr]</code> &mdash; parses a list with a <code>;</code> comment to end of line; asserts the comment is skipped and three children remain.</li>
+                    <li><strong>sexpr: error on unterminated list</strong> <code>[sexpr]</code> &mdash; parses &quot;(a (b c&quot;; asserts <code>parse</code> throws ParseError.</li>
+                    <li><strong>sexpr: error on unterminated string</strong> <code>[sexpr]</code> &mdash; parses an input with an unterminated quoted string; asserts ParseError is thrown.</li>
+                    <li><strong>sexpr: trailing junk after the main form is tolerated</strong> <code>[sexpr]</code> &mdash; feeds three inputs with extra forms or stray tokens after the main form; asserts all three still return a node with tag &quot;kicad_pcb&quot;.</li>
+                    <li><strong>sexpr: error on empty input</strong> <code>[sexpr]</code> &mdash; parses &quot;&quot;; asserts ParseError is thrown.</li>
+                    <li><strong>sexpr: line/col tracking</strong> <code>[sexpr]</code> &mdash; parses &quot;(a\n  b\n  c)&quot;; asserts each child reports the expected line and column for its position.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sexpr-tests-sexpr-emit-test-cpp">
+                <h3>sexpr/tests/sexpr_emit_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>emit: simple inline form</strong> <code>[sexpr][emit]</code> &mdash; emits &quot;(foo 1 2 3)&quot;; asserts the output matches the source plus a trailing newline.</li>
+                    <li><strong>emit: nested lists break onto their own lines</strong> <code>[sexpr][emit]</code> &mdash; emits a setup/stackup form; asserts output contains at least one newline and re-parsing reproduces the original tree.</li>
+                    <li><strong>emit: strings stay quoted, escapes round-trip</strong> <code>[sexpr][emit]</code> &mdash; emits and re-parses a form with escaped quotes; asserts <code>tree_equal</code> of original and re-parsed trees.</li>
+                    <li><strong>emit: numbers use the shortest round-trippable form</strong> <code>[sexpr][emit]</code> &mdash; emits coords 1.5, 0.51, 100 and pi; asserts output contains shortened tokens and no &quot;1.500&quot; cruft.</li>
+                    <li><strong>emit: empty list emits ()</strong> <code>[sexpr][emit]</code> &mdash; emits a form with embedded empty list; asserts re-parsed tree matches original.</li>
+                    <li><strong>emit: round-trips a kicad_pcb-shaped tree</strong> <code>[sexpr][emit][validation]</code> &mdash; emits a multi-layer stackup form and re-parses; asserts structural equality with the source.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="netlist-circuitcore-netlist-kicad-netlist-parser" class="newsblock">
+            <h2>netlist (circuitcore::netlist + kicad netlist parser)</h2>
+            <div class="file-block" id="formats-kicad-tests-netlist-parser-test-cpp">
+                <h3>formats/kicad/tests/netlist_parser_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>netlist: parses components and nets</strong> <code>[netlist]</code> &mdash; parses a tiny three-component, three-net export; asserts source_sheet matches and components.size() == 3 and nets.size() == 3.</li>
+                    <li><strong>netlist: component lookup</strong> <code>[netlist]</code> &mdash; looks up component &quot;C1&quot;; asserts its value is &quot;100nF&quot;, footprint is &quot;Capacitor_SMD:C_0402&quot; and a nonexistent ref returns nullptr.</li>
+                    <li><strong>netlist: net lookup carries node list</strong> <code>[netlist]</code> &mdash; looks up net &quot;VDD&quot;; asserts code is 1, two nodes are present, the first node is C1.1 with pin_function &quot;VDD&quot; and pin_type &quot;passive&quot;.</li>
+                    <li><strong>netlist: rejects non-export root</strong> <code>[netlist]</code> &mdash; parses &quot;(kicad_pcb)&quot;; asserts the optional return value is empty.</li>
+                    <li><strong>netlist: handles missing optional sections</strong> <code>[netlist]</code> &mdash; parses an export with empty design/components/nets; asserts parsing succeeds and both lists are empty.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="formats-kicad-pcb-gmsh-msh-writers" class="newsblock">
+            <h2>formats (kicad pcb + gmsh msh writers)</h2>
+            <div class="file-block" id="formats-kicad-tests-parser-test-cpp">
+                <h3>formats/kicad/tests/parser_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>parser: top-level requires kicad_pcb</strong> <code>[parser]</code> &mdash; parses &quot;(other)&quot;; asserts the optional result is empty.</li>
+                    <li><strong>parser: parses stackup and thickness</strong> <code>[parser]</code> &mdash; parses the tiny board; asserts three layers, correct names and ordinals, total_thickness == 1.6e-3 and <code>is_copper</code> is true for F.Cu and false for F.SilkS.</li>
+                    <li><strong>parser: parses nets</strong> <code>[parser]</code> &mdash; parses the tiny board; asserts three nets including an unnamed net 0, &quot;GND&quot; at id 1 and &quot;+3V3&quot; at id 2.</li>
+                    <li><strong>parser: parses segment with mm-to-m conversion</strong> <code>[parser]</code> &mdash; parses one segment; asserts coordinates and width are converted from mm to meters and layer/net are filled in.</li>
+                    <li><strong>parser: parses via with from/to layer ordinals</strong> <code>[parser]</code> &mdash; parses a via with size 0.8 drill 0.4 spanning F.Cu to B.Cu; asserts the layer ordinals are 0 and 31.</li>
+                    <li><strong>parser: parses zone with outline and filled polygons</strong> <code>[parser]</code> &mdash; parses a GND zone; asserts net_id 1, layer 0, four-point outline and one filled polygon with four points starting at 5mm.</li>
+                    <li><strong>parser: footprint pads transformed by footprint origin</strong> <code>[parser]</code> &mdash; parses an R_0402 footprint at (40, 50); asserts the two pads end up at the world-space positions (39.5, 50) and (40.5, 50) with the right nets.</li>
+                    <li><strong>parser: unknown layer name in segment is an error</strong> <code>[parser]</code> &mdash; parses a board where a segment references layer &quot;Mystery&quot;; asserts the parse fails.</li>
+                    <li><strong>parser: pad shape and size extracted</strong> <code>[parser]</code> &mdash; parses the tiny board pads; asserts shape is Rect and size is 0.5x0.5mm.</li>
+                    <li><strong>parser: parent_ref populated from footprint Reference property</strong> <code>[parser]</code> &mdash; parses the tiny board; asserts both pads have parent_ref &quot;R1&quot;.</li>
+                    <li><strong>parser: graphic items on non-copper layers</strong> <code>[parser][graphics]</code> &mdash; parses a board with five board-level graphics plus one fp_line; asserts at least one of each kind (Line/Arc/Circle/Polygon/Text) plus the fp_line on F.CrtYd is transformed to world (40, 50)-(41, 50).</li>
+                    <li><strong>parser: graphic items skip Edge.Cuts and copper layers</strong> <code>[parser][graphics]</code> &mdash; iterates graphics; asserts every graphic&#x27;s layer is non-copper and not Edge.Cuts.</li>
+                    <li><strong>parser: emits Component per footprint</strong> <code>[parser][components]</code> &mdash; parses the tiny board; asserts one Component with name &quot;Resistor_SMD:R_0402&quot;, reference R1, value 10k, position (40, 50) mm and a zero courtyard bbox.</li>
+                    <li><strong>parser: component courtyard bbox from fp_line on F.CrtYd</strong> <code>[parser][components]</code> &mdash; parses the graphics board; asserts the U1 component&#x27;s courtyard bbox collapses to the (40, 50)-(41, 50) fp_line extent.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="formats-gmsh-tests-msh-writer-test-cpp">
+                <h3>formats/gmsh/tests/msh_writer_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>msh writer: empty grid is rejected</strong> <code>[msh]</code> &mdash; writes a 0x0x0 grid; asserts the writer returns an empty optional.</li>
+                    <li><strong>msh writer: writes correct node + element counts</strong> <code>[msh]</code> &mdash; writes a 4x3x2 uniform copper grid; asserts MeshFormat header, &quot;Nodes\n60&quot;, &quot;Elements\n24&quot; and 24 hex8 element lines.</li>
+                    <li><strong>msh writer: air voxels are skipped from elements</strong> <code>[msh]</code> &mdash; writes a 2x2x2 grid with one copper voxel; asserts only 1 element is emitted but the full 3x3x3 = 27 vertex lattice is written.</li>
+                    <li><strong>msh writer: distinct material ids become $PhysicalNames entries</strong> <code>[msh]</code> &mdash; writes a 3x1x1 grid with copper, substrate and a custom id 7; asserts PhysicalNames section lists three names including &quot;copper&quot;, &quot;substrate&quot; and &quot;material_7&quot;.</li>
+                    <li><strong>msh writer: hex8 node ordering matches gmsh convention</strong> <code>[msh]</code> &mdash; writes a 1x1x1 copper grid; asserts the element row ends with corner ids &quot;1 2 4 3 5 6 8 7&quot;.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="ui-circuitcore-ui-camera-meshers" class="newsblock">
+            <h2>ui (circuitcore::ui camera + meshers)</h2>
+            <div class="file-block" id="pdnkit-tests-camera-test-cpp">
+                <h3>pdnkit/tests/camera_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>camera: defaults centered at origin, 1px=1mm</strong> <code>[camera]</code> &mdash; builds a default Camera2D; asserts center is (0,0) and <code>pixels_per_meter</code> is 1000.</li>
+                    <li><strong>camera: screen center maps to world center</strong> <code>[camera]</code> &mdash; sets center to (0.05, 0.07); asserts <code>world_to_screen</code> of the center returns the viewport midpoint and <code>screen_to_world</code> is its inverse.</li>
+                    <li><strong>camera: world&lt;-&gt;screen round-trip</strong> <code>[camera]</code> &mdash; with center (0.01, -0.02) and 5000 px/m, iterates nine screen points; asserts each survives a screen-&gt;world-&gt;screen round-trip within 1e-9.</li>
+                    <li><strong>camera: pan moves center by inverse of drag</strong> <code>[camera]</code> &mdash; calls <code>pan_pixels(100, 50)</code> at 1000 px/m; asserts the new center is (-0.1, -0.05).</li>
+                    <li><strong>camera: zoom_at keeps anchor pixel pointing at same world</strong> <code>[camera]</code> &mdash; captures the world point at (250, 175), zooms 2.5x at that anchor; asserts the same screen position still maps to the same world point and pixels_per_meter becomes 2500.</li>
+                    <li><strong>camera: fit_to_bounds centers and zooms to fit</strong> <code>[camera]</code> &mdash; fits a 100x50mm box into 800x600; asserts center is (0.05, 0.025) and pixels_per_meter is the width-limited 8000.</li>
+                    <li><strong>camera: ortho matrix has Y-flip and centers world</strong> <code>[camera]</code> &mdash; builds the ortho matrix for an origin-centered camera; asserts m[12]/m[13] are zero and a positive world Y maps to negative NDC Y.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-segment-mesher-test-cpp">
+                <h3>pdnkit/tests/segment_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>segments: horizontal segment yields 4 vertices, 2 triangles</strong> <code>[segments]</code> &mdash; meshes a 10mm-long, 1mm-wide horizontal segment; asserts one layer mesh with 54 vertices and 50 triangles and the first rim vertex sits at (0, +0.5mm).</li>
+                    <li><strong>segments: vertical segment width offset along X</strong> <code>[segments]</code> &mdash; meshes a 2mm-wide vertical segment; asserts 54 vertices and the first vertex is at (4mm, 0).</li>
+                    <li><strong>segments: zero-length and zero-width are skipped</strong> <code>[segments]</code> &mdash; adds one zero-length and one zero-width segment; asserts the mesher returns empty.</li>
+                    <li><strong>segments: non-copper layer is skipped</strong> <code>[segments]</code> &mdash; adds a segment on F.SilkS (ordinal 32); asserts the mesher returns empty.</li>
+                    <li><strong>segments: many segments on same layer aggregate</strong> <code>[segments]</code> &mdash; adds five segments on F.Cu; asserts one mesh with 270 vertices and 250 triangles.</li>
+                    <li><strong>build_all_meshes: combines zones and segments on same layer</strong> <code>[segments]</code> &mdash; mixes one square zone and one segment on F.Cu; asserts a single combined mesh with 58 vertices and 52 triangles.</li>
+                    <li><strong>build_all_meshes: zones-only and segments-only layers stay separate</strong> <code>[segments]</code> &mdash; puts a zone on F.Cu and a segment on B.Cu; asserts two distinct meshes are produced.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-via-mesher-test-cpp">
+                <h3>pdnkit/tests/via_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>via: 2-layer through-via produces a disk on each copper layer</strong> <code>[via]</code> &mdash; builds a through-via with drill 0.4mm spanning F.Cu to B.Cu; asserts three meshes (two copper + one drill pseudo-layer) each with 33 verts and 32 triangles.</li>
+                    <li><strong>via: 4-layer through-via covers all intermediate copper</strong> <code>[via]</code> &mdash; spans F.Cu, In1, In2 and B.Cu with drill 0; asserts four meshes (no drill pseudo-layer).</li>
+                    <li><strong>via: blind via covers only its endpoint range</strong> <code>[via]</code> &mdash; adds a blind via from F.Cu to In1 only; asserts two meshes.</li>
+                    <li><strong>via: zero outer_diameter is skipped</strong> <code>[via]</code> &mdash; adds a via with outer_diameter 0; asserts the mesher returns empty.</li>
+                    <li><strong>pad: pads draw a disk on each listed copper layer</strong> <code>[pad]</code> &mdash; places a pad covering F.Cu and F.SilkS; asserts only the copper layer mesh is produced.</li>
+                    <li><strong>pad: multiple pads on same layer aggregate</strong> <code>[pad]</code> &mdash; adds three pads on F.Cu; asserts one mesh with 99 vertices and 96 triangles.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-zone-mesher-test-cpp">
+                <h3>pdnkit/tests/zone_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>mesher: empty board produces no meshes</strong> <code>[mesher]</code> &mdash; meshes a default Board; asserts the result is empty.</li>
+                    <li><strong>mesher: single square zone yields 4 vertices and 2 triangles</strong> <code>[mesher]</code> &mdash; meshes one 100x100mm square zone on F.Cu; asserts one mesh with 4 vertices, 2 triangles and all indices below 4.</li>
+                    <li><strong>mesher: square with square hole yields 8 vertices, 8 triangles</strong> <code>[mesher]</code> &mdash; meshes a square zone with a square hole; asserts 8 vertices and 8 earcut triangles.</li>
+                    <li><strong>mesher: two zones on different layers -&gt; two meshes</strong> <code>[mesher]</code> &mdash; adds zones on F.Cu and B.Cu; asserts two meshes in insertion order.</li>
+                    <li><strong>mesher: two zones on same layer share one mesh</strong> <code>[mesher]</code> &mdash; adds two F.Cu zones; asserts one combined mesh with 8 verts and 4 triangles.</li>
+                    <li><strong>mesher: non-copper layer is skipped</strong> <code>[mesher]</code> &mdash; adds a zone on F.SilkS; asserts the mesher returns empty.</li>
+                    <li><strong>mesher: degenerate (&lt; 3 pts) outline is skipped without crashing</strong> <code>[mesher]</code> &mdash; meshes a polygon with only two outline points; asserts the result is empty.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-camera-test-cpp">
+                <h3>sikit/tests/camera_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>camera: defaults centered at origin, 1px=1mm</strong> <code>[camera]</code> &mdash; builds a default Camera2D; asserts center is (0,0) and pixels_per_meter is 1000.</li>
+                    <li><strong>camera: screen center maps to world center</strong> <code>[camera]</code> &mdash; sets center to (0.05, 0.07); asserts world_to_screen returns the viewport midpoint and screen_to_world inverts it.</li>
+                    <li><strong>camera: world&lt;-&gt;screen round-trip</strong> <code>[camera]</code> &mdash; iterates nine screen points at 5000 px/m; asserts each round-trips within 1e-9.</li>
+                    <li><strong>camera: pan moves center by inverse of drag</strong> <code>[camera]</code> &mdash; pans 100x50 px at 1000 px/m; asserts center becomes (-0.1, -0.05).</li>
+                    <li><strong>camera: zoom_at keeps anchor pixel pointing at same world</strong> <code>[camera]</code> &mdash; zooms 2.5x at screen (250, 175); asserts the anchor&#x27;s world point is preserved and pixels_per_meter is 2500.</li>
+                    <li><strong>camera: fit_to_bounds centers and zooms to fit</strong> <code>[camera]</code> &mdash; fits 100x50mm into 800x600; asserts center (0.05, 0.025) and width-limited 8000 px/m.</li>
+                    <li><strong>camera: ortho matrix has Y-flip and centers world</strong> <code>[camera]</code> &mdash; builds the ortho matrix; asserts m[12]/m[13] are zero and positive world Y maps to negative NDC Y.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-camera3d-test-cpp">
+                <h3>sikit/tests/camera3d_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>camera3d: eye_position derives spherical -&gt; Cartesian correctly</strong> <code>[cam3d]</code> &mdash; sets azimuth=0, elevation=0, distance=0.10 and a target; asserts <code>eye_position</code> returns target + (distance, 0, 0).</li>
+                    <li><strong>camera3d: orbit_pixels clamps elevation away from poles</strong> <code>[cam3d]</code> &mdash; orbits by 8000 px up and -16000 px down; asserts elevation stays inside (-pi/2, pi/2) but saturates near the caps.</li>
+                    <li><strong>camera3d: orbit_pixels wraps azimuth into [-pi, pi]</strong> <code>[cam3d]</code> &mdash; orbits 20000 px horizontally; asserts the resulting azimuth lies in [-pi, pi].</li>
+                    <li><strong>camera3d: pan_pixels moves target perpendicular to view</strong> <code>[cam3d]</code> &mdash; pans 100 px right while looking along +X; asserts target_x is unchanged but target_y moves.</li>
+                    <li><strong>camera3d: zoom clamps distance to a sane band</strong> <code>[cam3d]</code> &mdash; zooms in 60 times then out 80 times; asserts distance stays in [1e-4, 10.0].</li>
+                    <li><strong>camera3d: fit_to_bounds centers target on the box</strong> <code>[cam3d]</code> &mdash; fits a 100x50mm box; asserts target lands at (0.05, 0.025, 0.0008) and distance is in (0, 10).</li>
+                    <li><strong>camera3d: view_projection has 16 entries and is non-degenerate</strong> <code>[cam3d]</code> &mdash; fits a 50x50mm box and builds the view-projection matrix; asserts 16 entries, at least one differs from identity, and all are finite.</li>
+                    <li><strong>camera3d: zero widget size returns identity matrix safely</strong> <code>[cam3d]</code> &mdash; calls view_projection(0, 0); asserts the diagonal entries are 1.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-segment-mesher-test-cpp">
+                <h3>sikit/tests/segment_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>segments: horizontal segment yields 4 vertices, 2 triangles</strong> <code>[segments]</code> &mdash; meshes a 10mm horizontal segment; asserts 54 verts, 50 tris and the first vertex sits at (0, +0.5mm).</li>
+                    <li><strong>segments: vertical segment width offset along X</strong> <code>[segments]</code> &mdash; meshes a 2mm-wide vertical segment; asserts 54 verts and first vertex at (4mm, 0).</li>
+                    <li><strong>segments: zero-length and zero-width are skipped</strong> <code>[segments]</code> &mdash; adds zero-length and zero-width segments; asserts the mesher returns empty.</li>
+                    <li><strong>segments: non-copper layer is skipped</strong> <code>[segments]</code> &mdash; adds a segment on F.SilkS; asserts the mesher returns empty.</li>
+                    <li><strong>segments: many segments on same layer aggregate</strong> <code>[segments]</code> &mdash; adds five F.Cu segments; asserts one mesh with 270 verts and 250 tris.</li>
+                    <li><strong>build_all_meshes: combines zones and segments on same layer</strong> <code>[segments]</code> &mdash; mixes one zone and one segment on F.Cu; asserts a single 58-vert, 52-tri mesh.</li>
+                    <li><strong>build_all_meshes: zones-only and segments-only layers stay separate</strong> <code>[segments]</code> &mdash; splits one zone on F.Cu and one segment on B.Cu; asserts two meshes.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-via-mesher-test-cpp">
+                <h3>sikit/tests/via_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>via: 2-layer through-via produces a disk on each copper layer</strong> <code>[via]</code> &mdash; meshes a through-via with 0.4mm drill spanning F.Cu/B.Cu; asserts three meshes (two copper + drill) each 33 verts / 32 tris.</li>
+                    <li><strong>via: 4-layer through-via covers all intermediate copper</strong> <code>[via]</code> &mdash; spans F.Cu, In1, In2, B.Cu with drill 0; asserts four meshes.</li>
+                    <li><strong>via: blind via covers only its endpoint range</strong> <code>[via]</code> &mdash; adds a blind via F.Cu -&gt; In1; asserts two meshes.</li>
+                    <li><strong>via: zero outer_diameter is skipped</strong> <code>[via]</code> &mdash; adds a via with zero outer_diameter; asserts the mesher returns empty.</li>
+                    <li><strong>pad: pads draw a disk on each listed copper layer</strong> <code>[pad]</code> &mdash; places a pad covering F.Cu and F.SilkS; asserts only the copper mesh is produced.</li>
+                    <li><strong>pad: multiple pads on same layer aggregate</strong> <code>[pad]</code> &mdash; adds three pads on F.Cu; asserts one mesh with 99 verts / 96 tris.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-zone-mesher-test-cpp">
+                <h3>sikit/tests/zone_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>mesher: empty board produces no meshes</strong> <code>[mesher]</code> &mdash; meshes a default Board; asserts the result is empty.</li>
+                    <li><strong>mesher: single square zone yields 4 vertices and 2 triangles</strong> <code>[mesher]</code> &mdash; meshes a single square zone on F.Cu; asserts 4 verts, 2 tris and indices below 4.</li>
+                    <li><strong>mesher: square with square hole yields 8 vertices, 8 triangles</strong> <code>[mesher]</code> &mdash; meshes a square with a square hole; asserts 8 verts and 8 earcut tris.</li>
+                    <li><strong>mesher: two zones on different layers -&gt; two meshes</strong> <code>[mesher]</code> &mdash; adds zones on F.Cu and B.Cu; asserts two meshes in insertion order.</li>
+                    <li><strong>mesher: two zones on same layer share one mesh</strong> <code>[mesher]</code> &mdash; adds two F.Cu zones; asserts one merged mesh with 8 verts / 4 tris.</li>
+                    <li><strong>mesher: non-copper layer is skipped</strong> <code>[mesher]</code> &mdash; adds a zone on F.SilkS; asserts the mesher returns empty.</li>
+                    <li><strong>mesher: degenerate (&lt; 3 pts) outline is skipped without crashing</strong> <code>[mesher]</code> &mdash; meshes a polygon with two outline points; asserts the result is empty.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="sikit-signal-integrity" class="newsblock">
+            <h2>sikit (signal integrity)</h2>
+            <div class="file-block" id="sikit-tests-ami-test-cpp">
+                <h3>sikit/tests/ami_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ami parser: model name + sections</strong> <code>[ami]</code> &mdash; parses a stub AMI definition; asserts model_name is <code>My_FFE_Model</code> and both reserved and model_specific sections have 3 entries.</li>
+                    <li><strong>ami parser: usage + type per parameter</strong> <code>[ami]</code> &mdash; parses the sample; asserts AMI_Version is String/Info, Init_Returns_Impulse is Boolean/Info, Tap1 is Float/In and Mode is Integer.</li>
+                    <li><strong>ami parser: ranges parsed (typ, min, max)</strong> <code>[ami]</code> &mdash; parses Tap1 with range (0.0 -0.5 0.5); asserts has_range and the typ/min/max values are extracted, plus Tap2 typ=0.1 min=-0.3.</li>
+                    <li><strong>ami parser: defaults captured</strong> <code>[ami]</code> &mdash; asserts Tap2 default is &quot;0.1&quot; and Mode default is &quot;1&quot;.</li>
+                    <li><strong>ami parser: description field captured</strong> <code>[ami]</code> &mdash; asserts the Mode parameter&#x27;s description contains &quot;normal&quot;.</li>
+                    <li><strong>ami parser: missing file throws</strong> <code>[ami]</code> &mdash; calls <code>read_file(&quot;/nonexistent/path.ami&quot;)</code>; asserts AmiParseError is thrown.</li>
+                    <li><strong>ami loader: stub library round-trips through Init + GetWave</strong> <code>[ami]</code> &mdash; searches for <code>stub_ami.so</code> next to the test binary, skips if missing; otherwise asserts init/close/get_wave are available, the impulse is scaled by 0.8 by <code>init</code>, and the stub adds 0.05 to each sample in <code>get_wave</code>.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-bathtub-test-cpp">
+                <h3>sikit/tests/bathtub_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>bathtub: non-trivial waveform produces a non-flat curve</strong> <code>[bathtub]</code> &mdash; builds a heavily ISI-ridden PRBS7+RC waveform, computes the bathtub; asserts ber size matches ui_offset, all BER values are in [0,1], some BER is non-zero, and ui_offset is monotonically increasing.</li>
+                    <li><strong>bathtub: clean NRZ has near-zero BER across the UI</strong> <code>[bathtub]</code> &mdash; builds a clean NRZ waveform and bathtub; asserts every BER value is approximately 0.</li>
+                    <li><strong>bathtub: timing_margin_at returns sensible offsets</strong> <code>[bathtub]</code> &mdash; computes the bathtub of a mildly filtered PRBS7; asserts margin at BER 10% is &gt;= margin at BER 1% when both are positive.</li>
+                    <li><strong>bathtub: fully empty eye returns empty curve</strong> <code>[bathtub]</code> &mdash; feeds a 64x64 EyeGrid of zeros; asserts ber is empty and <code>timing_margin_at(0.5)</code> returns -1.</li>
+                    <li><strong>bathtub: ui_offset covers the full UI</strong> <code>[bathtub]</code> &mdash; builds a bathtub from a filtered PRBS7; asserts ui_offset starts below 0.05 and ends above 0.95.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-bus-group-test-cpp">
+                <h3>sikit/tests/bus_group_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>bus: groups DDR_DQ0..3 as a single bus</strong> <code>[bus]</code> &mdash; adds four DDR_DQ nets to a board; asserts a single DDR_DQ group with four members.</li>
+                    <li><strong>bus: min / max length report the bus extremes</strong> <code>[bus]</code> &mdash; adds four DQ nets with varying lengths; asserts min_length_m == 49.5mm, max == 50.3mm and skew == 0.8mm.</li>
+                    <li><strong>bus: skew_ps + budget flag set correctly</strong> <code>[bus]</code> &mdash; adds two DQ nets with 10mm spread; asserts skew_ps &gt; 50 and <code>exceeds_budget</code> is true.</li>
+                    <li><strong>bus: single-member group is not reported</strong> <code>[bus]</code> &mdash; adds just DDR_DQ0; asserts no group is returned.</li>
+                    <li><strong>bus: nets without a trailing integer are skipped</strong> <code>[bus]</code> &mdash; adds USB_DP/DN and SCK/MOSI; asserts the groups list is empty.</li>
+                    <li><strong>bus: diff pairs collapse to a single member</strong> <code>[bus]</code> &mdash; adds three PCIE_TX_LANE differential pairs; asserts the PCIE_TX_LANE group has 3 members all flagged as diff pairs with indices 0/1/2.</li>
+                    <li><strong>bus: empty board returns empty result</strong> <code>[bus]</code> &mdash; runs <code>compute_bus_groups</code> on an empty Board; asserts the result is empty.</li>
+                    <li><strong>bus: zero-length skew gives zero ps + no budget flag</strong> <code>[bus]</code> &mdash; adds three identical-length DQ nets; asserts skew_m and skew_ps are ~0 and <code>exceeds_budget</code> is false.</li>
+                    <li><strong>bus: members come back sorted by index</strong> <code>[bus]</code> &mdash; adds DQ nets out of order; asserts member indices come back sorted (0, 1, 3, 7).</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-channel-dispersion-test-cpp">
+                <h3>sikit/tests/channel_dispersion_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>dispersion: ChannelSpec without model matches v0 behavior</strong> <code>[disp]</code> &mdash; synthesises a channel with and without a dispersion_model (none); asserts both produce identical 2x2 S-matrices at 1/5/10 GHz within 1e-12.</li>
+                    <li><strong>dispersion: model attached -&gt; results differ from constant epsilon_r</strong> <code>[disp]</code> &mdash; synthesises with a Djordjevic-Sarkar model vs constant epsilon_r at 10 GHz; asserts |S21| differs by more than 1e-4.</li>
+                    <li><strong>dispersion: at f0 the two paths agree closely</strong> <code>[disp]</code> &mdash; evaluates at the model&#x27;s reference frequency 1 GHz; asserts |S21| matches the constant-model magnitude within 2%.</li>
+                    <li><strong>dispersion: |S21| still drops monotonically at higher freq</strong> <code>[disp]</code> &mdash; sweeps 1/3/7/15 GHz with the DS model; asserts |S21| is strictly decreasing.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-channel-synthesis-test-cpp">
+                <h3>sikit/tests/channel_synthesis_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>synthesize: zero-length channel is the identity 2-port</strong> <code>[synth]</code> &mdash; synthesises a length=0 channel at 1/5/10 GHz; asserts num_ports==2, frequencies.size()==3, |S11|=|S22|=0 and |S12|=|S21|=1.</li>
+                    <li><strong>synthesize: matched lossless line has |S21|=1 and S11=0</strong> <code>[synth]</code> &mdash; uses tan_delta=0 and sigma_copper=1e30 with Zref=Z0; asserts |S11|=0 and |S21|=1.</li>
+                    <li><strong>synthesize: mismatched line has non-zero |S11|</strong> <code>[synth]</code> &mdash; synthesises with Zref=75 ohms; asserts at least one frequency has |S11| &gt; 0.01.</li>
+                    <li>**synthesize: reciprocal &mdash; S12 == S21** `[synth]` -- sweeps four frequencies; asserts S12 == S21 at each.</li>
+                    <li><strong>synthesize: phase delay matches v_phase * l</strong> <code>[synth]</code> &mdash; runs a lossless 2 GHz synthesis with Zref=Z0; asserts the measured atan2 phase equals the analytic -beta*l wrapped to (-pi, pi].</li>
+                    <li><strong>synthesize: throws on invalid geometry</strong> <code>[synth]</code> &mdash; sets trace_width=0; asserts <code>synthesize_channel</code> throws.</li>
+                    <li><strong>synthesize: lossy matched line has |S21| &lt; 1 at high frequency</strong> <code>[synth]</code> &mdash; runs a 30cm tan_delta=0.02 channel at 1/5/10 GHz; asserts |S21| &lt; 1 and strictly decreases.</li>
+                    <li><strong>synthesize: zero loss reproduces lossless behavior</strong> <code>[synth]</code> &mdash; runs a 30cm lossless line at 5 GHz; asserts |S21| == 1 within 1e-6.</li>
+                    <li><strong>synthesize: FDM engine produces a similar Z0/loss to closed-form</strong> <code>[synth][fdm]</code> &mdash; runs the same spec through ClosedForm and Fdm engines at 1/5 GHz; asserts |S21| values agree within 5%.</li>
+                    <li><strong>synthesize: FDM engine returns 2-port with the requested grid</strong> <code>[synth][fdm]</code> &mdash; runs the FDM engine at 1/3/7 GHz; asserts num_ports==2 and three S-matrices come back.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-channel-test-cpp">
+                <h3>sikit/tests/channel_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>channel: interpolate_s21 at exact grid points</strong> <code>[channel]</code> &mdash; builds a 3-point S21 table; asserts the interpolator returns each tabulated value at its exact frequency.</li>
+                    <li><strong>channel: interpolate_s21 linear between points</strong> <code>[channel]</code> &mdash; linear S21 from 1.0 at 1 GHz to 0 at 2 GHz; asserts the value at 1.5 GHz is 0.5.</li>
+                    <li><strong>channel: interpolate_s21 below range is passthrough</strong> <code>[channel]</code> &mdash; queries 0 Hz on a 1-2 GHz table; asserts |S21|=1, imag=0 (DC passthrough).</li>
+                    <li><strong>channel: interpolate_s21 above range clamps to last value</strong> <code>[channel]</code> &mdash; queries 10 GHz on a 1-2 GHz table ending at 0.2; asserts the returned value is 0.2.</li>
+                    <li><strong>channel: identity S21 reproduces TX waveform</strong> <code>[channel]</code> &mdash; applies an S21=1 channel to a 1 GHz sine at 32 GS/s; asserts the output equals the input within 1e-8.</li>
+                    <li><strong>channel: low-pass S21 attenuates a high-frequency tone</strong> <code>[channel]</code> &mdash; applies a 1-&gt;10 GHz roll-off to 500 MHz and 8 GHz sines; asserts the LF peak stays &gt; 0.8 and the HF peak drops below 0.3.</li>
+                    <li><strong>channel: empty input returns empty</strong> <code>[channel]</code> &mdash; calls <code>apply_channel({})</code>; asserts the result is empty.</li>
+                    <li><strong>channel: rejects non-2-port file</strong> <code>[channel]</code> &mdash; supplies a 1-port Touchstone; asserts <code>apply_channel</code> throws.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-compliance-test-cpp">
+                <h3>sikit/tests/compliance_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>compliance: every shipped spec carries a usable mask</strong> <code>[compliance]</code> &mdash; iterates all_compliance_specs(); asserts non-empty name/family/source, baud_hz&gt;0, ui_seconds==1/baud, mask polygon has &gt;=3 vertices.</li>
+                    <li><strong>compliance: name lookup retrieves each shipped spec</strong> <code>[compliance]</code> &mdash; looks up every spec by name; asserts the pointer round-trips and a bogus name returns nullptr.</li>
+                    <li><strong>compliance: spec names are unique</strong> <code>[compliance]</code> &mdash; inserts every spec name into a set; asserts no duplicates.</li>
+                    <li><strong>compliance: PCIe generations have strictly increasing baud</strong> <code>[compliance][pcie]</code> &mdash; asserts Gen3 &lt; Gen4 &lt; Gen5 baud and Gen6 &gt;= Gen5 (PAM4 stays at Gen5 symbol rate).</li>
+                    <li><strong>compliance: PAM4 specs are flagged is_pam4=true</strong> <code>[compliance][pam4]</code> &mdash; asserts PCIe Gen6 and 50G-KR are flagged is_pam4 while Gen5, DDR4-3200 and USB 3.1 Gen2 are not.</li>
+                    <li><strong>compliance: spec families cover the listed standards</strong> <code>[compliance]</code> &mdash; collects unique family strings; asserts PCIe, DDR, USB, HDMI and Ethernet are all represented.</li>
+                    <li><strong>compliance: mask polygons are non-degenerate</strong> <code>[compliance]</code> &mdash; iterates every spec; asserts consecutive vertices differ and shoelace area &gt; 1e-6.</li>
+                    <li><strong>compliance: every mask centre is at the eye-centre keep-out</strong> <code>[compliance]</code> &mdash; asserts (0.5 UI, 0 V) lies inside every shipped mask polygon.</li>
+                    <li><strong>compliance: a clean centred eye passes every NRZ spec</strong> <code>[compliance]</code> &mdash; builds a synthetic +-1V eye with no mid-voltage transitions; asserts <code>passes()</code> is true for every non-PAM4 spec.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-connector-test-cpp">
+                <h3>sikit/tests/connector_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>connector: SMA edge launch generates a low-loss 2-port</strong> <code>[connector]</code> &mdash; generates a 64-point log sweep from 100 MHz to 30 GHz; asserts |S21| &gt; 0.95 at 1 GHz, &gt; 0.70 at 30 GHz, and monotonically decreasing.</li>
+                    <li><strong>connector: 2-port output is reciprocal and symmetric</strong> <code>[connector]</code> &mdash; uses the SMA panel-mount preset; asserts S11==S22 and S21==S12 at every frequency.</li>
+                    <li><strong>connector: USB-C diff connector emits a 4-port file</strong> <code>[connector]</code> &mdash; generates a USB-C diff pair sweep; asserts num_ports==4, 16 entries per matrix, and the P_near-&gt;P_far through |S31| &gt; 0.9 at low freq.</li>
+                    <li><strong>connector: USB-C notch produces a measurable dip near 18 GHz</strong> <code>[connector]</code> &mdash; finds the minimum |S31| across a 128-point sweep; asserts the notch frequency is between 10 and 25 GHz.</li>
+                    <li><strong>connector: preset registry is consistent</strong> <code>[connector]</code> &mdash; iterates <code>available_connector_presets()</code>; asserts each preset name round-trips, num_ports &gt;= 2 and il_slope &gt; 0.</li>
+                    <li><strong>connector: preset_by_name rejects unknown names</strong> <code>[connector]</code> &mdash; queries a bogus name; asserts an exception is thrown.</li>
+                    <li><strong>connector: rejects degenerate frequency input</strong> <code>[connector]</code> &mdash; supplies empty, [0.0] and decreasing frequency lists; asserts all three throw.</li>
+                    <li><strong>connector: harsher RL preset produces louder |S11|</strong> <code>[connector]</code> &mdash; compares edge-launch (RL 25 dB) and panel-mount (RL 20 dB); asserts panel-mount&#x27;s |S11| is larger.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-crosstalk-test-cpp">
+                <h3>sikit/tests/crosstalk_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>crosstalk: zero-aggressor scenario reproduces clean victim eye</strong> <code>[crosstalk]</code> &mdash; simulates a 5 Gbaud eye with no aggressors and a passthrough victim; asserts the eye has height &gt; 1.5 V and width &gt; 0.5 UI.</li>
+                    <li><strong>crosstalk: a single coupled aggressor closes the eye more than no aggressor</strong> <code>[crosstalk]</code> &mdash; compares clean vs one aggressor at 0.35 coupling; asserts the noisy eye is shorter.</li>
+                    <li><strong>crosstalk: stronger coupling closes the eye further</strong> <code>[crosstalk]</code> &mdash; compares 0.10 and 0.45 couplings; asserts the heavy-coupling eye is shorter.</li>
+                    <li><strong>crosstalk: zero-coupling aggressor contributes nothing</strong> <code>[crosstalk]</code> &mdash; compares scenario with one 0-coupling aggressor vs none; asserts heights match within 0.05 V.</li>
+                    <li><strong>crosstalk: three aggressors close the eye more than one</strong> <code>[crosstalk]</code> &mdash; one 0.20-coupling aggressor vs three; asserts the three-aggressor eye is shorter.</li>
+                    <li><strong>crosstalk: rejects invalid input</strong> <code>[crosstalk]</code> &mdash; feeds zero baud, zero bits, samples_per_ui=1, an empty victim and a wrong-port-count aggressor; asserts each throws.</li>
+                    <li><strong>crosstalk: diff_pair_to_scenario extracts the right slices for PNPN</strong> <code>[crosstalk]</code> &mdash; builds a 4-port with index-encoded entries; asserts the PNPN extraction picks S31=20 for the through and S(P_far&lt;-N_near)=21 for the coupling.</li>
+                    <li><strong>crosstalk: diff_pair_to_scenario rejects non-4-port</strong> <code>[crosstalk]</code> &mdash; supplies a 2-port file; asserts the call throws.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-deembed-test-cpp">
+                <h3>sikit/tests/deembed_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>deembed: passthrough fixture leaves the measurement unchanged</strong> <code>[deembed]</code> &mdash; de-embeds with identity fixtures on both sides; asserts the recovered DUT matches the input.</li>
+                    <li><strong>deembed: embed-then-deembed round-trip recovers the DUT</strong> <code>[deembed]</code> &mdash; cascades L*DUT*R, de-embeds; asserts the recovered DUT matches within 1e-6.</li>
+                    <li><strong>deembed_symmetric: same fixture on both sides round-trips</strong> <code>[deembed]</code> &mdash; cascades F*DUT*F and runs <code>deembed_symmetric</code>; asserts the recovered DUT matches within 1e-6.</li>
+                    <li><strong>deembed: frequency grid mismatch is rejected</strong> <code>[deembed]</code> &mdash; shifts the last frequency point on the right-side fixture; asserts SParamError is thrown.</li>
+                    <li><strong>deembed: non-2-port input is rejected</strong> <code>[deembed]</code> &mdash; supplies a 4-port measurement; asserts SParamError is thrown.</li>
+                    <li><strong>invert_t: T * T^-1 ~= identity for a passthrough</strong> <code>[deembed][t]</code> &mdash; inverts a non-trivial T matrix; asserts T*Tinv equals identity within 1e-9.</li>
+                    <li><strong>invert_t: singular T throws</strong> <code>[deembed][t]</code> &mdash; inverts a T with a zero column; asserts SParamError is thrown.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-diff-pair-test-cpp">
+                <h3>sikit/tests/diff_pair_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>diff: _P/_N pair detected</strong> <code>[diffpair]</code> &mdash; adds USB_DP_P and USB_DP_N to a board; asserts one pair with base USB_DP and suffix style &quot;_P/_N&quot;.</li>
+                    <li><strong>diff: +/- suffix style</strong> <code>[diffpair]</code> &mdash; adds D+ and D-; asserts one pair with base D and suffix &quot;+/-&quot;.</li>
+                    <li><strong>diff: _POS/_NEG suffix style</strong> <code>[diffpair]</code> &mdash; adds RX_POS and RX_NEG; asserts one pair with suffix &quot;_POS/_NEG&quot;.</li>
+                    <li><strong>diff: DP/DM suffix style (no separator)</strong> <code>[diffpair]</code> &mdash; adds USBDP and USBDM; asserts one pair with base USB and suffix &quot;DP/DM&quot;.</li>
+                    <li><strong>diff: multiple pairs in one board</strong> <code>[diffpair]</code> &mdash; adds USB_DP/DM plus PCIE_TX_P/N and PCIE_RX_P/N; asserts three pairs are found.</li>
+                    <li><strong>diff: unpaired _P net is not reported</strong> <code>[diffpair]</code> &mdash; adds only FOO_P with no FOO_N; asserts the pair list is empty.</li>
+                    <li><strong>diff: empty net name skipped</strong> <code>[diffpair]</code> &mdash; adds an empty-name net plus FOO_P/FOO_N; asserts one pair is reported.</li>
+                    <li><strong>diff: prefer more-specific suffix (_POS over P)</strong> <code>[diffpair]</code> &mdash; adds CLK_POS/NEG; asserts the suffix is the explicit &quot;_POS/_NEG&quot; not bare P/N.</li>
+                    <li><strong>highspeed keyword: protocol names match</strong> <code>[diffpair]</code> &mdash; queries <code>looks_high_speed</code> on USB_DP, PCIE_TX_P, DDR4_DQ0, hdmi_clk, MIPI_CSI_D0_P, LVDS_RX0+ and SATA_RX_P; asserts each returns true.</li>
+                    <li><strong>highspeed keyword: non-matches</strong> <code>[diffpair]</code> &mdash; queries <code>looks_high_speed</code> on GND, VCC, +3V3, RESET_N and &quot;&quot;; asserts each returns false.</li>
+                    <li><strong>find_high_speed_nets includes diff-pair members and keyword hits</strong> <code>[diffpair]</code> &mdash; adds USB diff pair, GND, VCC and PCIE_REFCLK; asserts the returned net id list is {1, 2, 5}.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-diff-synth-test-cpp">
+                <h3>sikit/tests/diff_synth_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>diff synth: returns a 4-port file with the requested freq grid</strong> <code>[diffsynth]</code> &mdash; synthesises a 5cm diff pair at 1/2/5 GHz; asserts num_ports==4, three frequencies and 16 entries per matrix.</li>
+                    <li><strong>diff synth: matrix is symmetric (reciprocal lossless network)</strong> <code>[diffsynth]</code> &mdash; synthesises at 1/3 GHz; asserts S_ij == S_ji for every off-diagonal entry within 1e-9.</li>
+                    <li><strong>diff synth: zero-length channel is the identity 4-port</strong> <code>[diffsynth]</code> &mdash; runs length=1e-12 at 1 GHz; asserts |Sii| &lt; 0.01 and same-trace through |S21|, |S43| ~= 1.</li>
+                    <li><strong>diff synth: cross-trace coupling falls off with spacing</strong> <code>[diffsynth]</code> &mdash; compares 0.10mm and 1.0mm spacings at 2 GHz; asserts |S13| is larger for the closer pair.</li>
+                    <li><strong>diff synth: rejects bad geometry</strong> <code>[diffsynth]</code> &mdash; sets trace_width=0 then length=-1; asserts both throw.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-djordjevic-sarkar-test-cpp">
+                <h3>sikit/tests/djordjevic_sarkar_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>DS: from_reference reproduces inputs at f0</strong> <code>[ds]</code> &mdash; builds model from FR-4 (epsilon_r=4.5, tan_delta=0.02) at 1 GHz; asserts the model returns those exact values at f0.</li>
+                    <li><strong>DS: epsilon_r decreases monotonically with frequency in-band</strong> <code>[ds]</code> &mdash; evaluates epsilon_r at 1e7..1e11 Hz; asserts each value is strictly less than the previous.</li>
+                    <li><strong>DS: epsilon&#x27;&#x27; is positive (lossy material) across band</strong> <code>[ds]</code> &mdash; evaluates complex epsilon at 1e7..1e11 Hz; asserts the imaginary part is negative (since epsilon = e&#x27; - j e&#x27;&#x27;).</li>
+                    <li><strong>DS: tan delta stays in a physically plausible range</strong> <code>[ds]</code> &mdash; evaluates tan_delta across 1e7..1e11 Hz; asserts each value is between 0 and 0.5.</li>
+                    <li><strong>DS: high tan_delta gives larger dispersion magnitude</strong> <code>[ds]</code> &mdash; compares FR-4 (tan=0.02) vs Rogers (tan=0.001); asserts the FR-4 epsilon_r swing across the band is larger and positive.</li>
+                    <li><strong>DS: rejects bad construction parameters</strong> <code>[ds]</code> &mdash; constructs with f1=0, f1&gt;=f2, eps_r=-1 and f0=-1; asserts each throws.</li>
+                    <li><strong>DS: very low loss approaches lossless behavior</strong> <code>[ds]</code> &mdash; builds with tan_delta=0; asserts epsilon_r is 4.4 at 1e6 and 1e10 and tan_delta(1e9) is 0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-em2d-test-cpp">
+                <h3>sikit/tests/em2d_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>em2d: epsilon_r_at returns the correct layer value</strong> <code>[em2d]</code> &mdash; builds a 1mm FR-4 + 0.5mm Rogers stack; asserts air above/below returns 1.0 and mid-layer returns the matching epsilon_r.</li>
+                    <li><strong>em2d: parallel-plate capacitor recovers analytic C ~= eps0*er*W/d</strong> <code>[em2d]</code> &mdash; solves a wide-plate cap with W=4mm d=0.2mm at 50um cells; asserts the FDM charge per length is between 0.95x and 2x the analytic kEps0*W/d.</li>
+                    <li><strong>em2d: microstrip Z0 within 15% of Wadell closed-form</strong> <code>[em2d]</code> &mdash; solves a canonical 2.8mm/1.524mm FR-4 microstrip at 100um cells; asserts Z0 == 50 +/- 8 ohms and eps_eff between 2.0 and 4.4.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-example-test-cpp">
+                <h3>sikit/tests/example_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>example: demo_board.kicad_pcb parses cleanly</strong> <code>[example]</code> &mdash; parses the bundled demo_board.kicad_pcb; asserts &gt;=10 nets and 5 stackup layers.</li>
+                    <li><strong>example: demo_board carries the expected nets</strong> <code>[example]</code> &mdash; looks up GND, VCC, USB_DP, USB_DN, DDR_DQ0..3 and BAD_NET; asserts every net is found.</li>
+                    <li><strong>example: USB diff pair skew matches the walkthrough</strong> <code>[example]</code> &mdash; runs <code>compute_diff_pair_skews</code> with 5 ps budget; asserts one pair with skew_m == -0.4mm that does not exceed the budget.</li>
+                    <li><strong>example: DDR_DQ bus skew fails the 10 ps default budget</strong> <code>[example]</code> &mdash; runs <code>compute_bus_groups</code> with 10 ps budget; asserts one DDR_DQ group with four members, length range 39..43mm and <code>exceeds_budget</code> true.</li>
+                    <li><strong>example: BAD_NET is the only return-path violation</strong> <code>[example]</code> &mdash; runs <code>detect_return_path_violations</code>; asserts the top entry is BAD_NET with off_plane_fraction 1.0 and reference_layer 1.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-eye-mask-test-cpp">
+                <h3>sikit/tests/eye_mask_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>eye_mask: point-in-polygon ray cast basics</strong> <code>[mask]</code> &mdash; tests <code>point_in_polygon</code> on the unit square; asserts inside returns true and three outside points return false.</li>
+                    <li><strong>eye_mask: available masks listed</strong> <code>[mask]</code> &mdash; queries <code>available_mask_names()</code>; asserts &gt;=2 names, the first round-trips through <code>mask_by_name</code> and a bogus name returns nullptr.</li>
+                    <li><strong>eye_mask: clean NRZ passes the USB-style mask</strong> <code>[mask]</code> &mdash; builds a clean NRZ eye; asserts <code>count_violations</code> is 0 against <code>usb20_hs_template1</code> and <code>passes</code> is true.</li>
+                    <li><strong>eye_mask: heavy ISI fails the centered-opening mask</strong> <code>[mask]</code> &mdash; builds a heavily filtered NRZ eye; asserts violations &gt; 0 and <code>passes</code> is false.</li>
+                    <li><strong>eye_mask: empty eye reports zero violations</strong> <code>[mask]</code> &mdash; supplies a 128x96 zeroed eye; asserts violations == 0 and <code>passes</code> is true.</li>
+                    <li><strong>eye_mask: degenerate polygon never reports inside</strong> <code>[mask]</code> &mdash; runs ray cast on a 2-point line; asserts the point is outside.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-eye-metrics-test-cpp">
+                <h3>sikit/tests/eye_metrics_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>metrics: clean unfiltered NRZ has a wide-open eye</strong> <code>[metrics]</code> &mdash; measures a clean NRZ eye; asserts height_v &gt; 1.5, width_ui == 1.0 and jitter_pp_ui == 0.</li>
+                    <li><strong>metrics: heavy ISI closes the eye</strong> <code>[metrics]</code> &mdash; measures a heavily filtered eye; asserts height_v &lt; 1.0.</li>
+                    <li><strong>metrics: bandwidth-limited ramped NRZ shows measurable jitter</strong> <code>[metrics]</code> &mdash; measures a 20% UI ramp NRZ eye; asserts height &gt; 0.5, jitter &gt; 0 and width in (0, 1).</li>
+                    <li><strong>metrics: empty eye returns zeros</strong> <code>[metrics]</code> &mdash; measures a 32x32 zeroed eye; asserts height/width/jitter are all 0.</li>
+                    <li><strong>metrics: threshold is midpoint of v_min/v_max</strong> <code>[metrics]</code> &mdash; measures a tiny NRZ pattern; asserts v_threshold == 0.5*(v_max+v_min).</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-eye-ramp-test-cpp">
+                <h3>sikit/tests/eye_ramp_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ramp: zero fraction reproduces step NRZ</strong> <code>[ramp]</code> &mdash; generates <code>nrz_waveform</code> and <code>nrz_with_ramp(...,0.0)</code> on the same bits; asserts the two outputs are identical.</li>
+                    <li><strong>ramp: transitions are linear across the ramp window</strong> <code>[ramp]</code> &mdash; generates a {0,1} ramp with 40% UI rise; asserts the four interpolated samples take values -0.5, 0.0, +0.5, +1.0.</li>
+                    <li><strong>ramp: identical bits produce a flat trace</strong> <code>[ramp]</code> &mdash; ramps {1,1,1}; asserts every sample equals 1.0.</li>
+                    <li><strong>ramp: fraction &gt; 1 is clamped to 1</strong> <code>[ramp]</code> &mdash; requests 500% rise; asserts the waveform still has the expected sample count and the call doesn&#x27;t fail.</li>
+                    <li><strong>ramp_fraction_from_ibis: dt_rise / UI</strong> <code>[ramp]</code> &mdash; supplies an IBIS model with 100 ps rise; asserts fraction at 1 GHz is 0.1 and at 10 GHz is clamped to 1.0.</li>
+                    <li><strong>ramp_fraction_from_ibis: empty model returns 0</strong> <code>[ramp]</code> &mdash; asserts a model with no ramp data returns fraction 0.</li>
+                    <li><strong>ramp_fraction_from_ibis: zero baud returns 0</strong> <code>[ramp]</code> &mdash; queries fraction at baud=0; asserts the function returns 0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-eye-test-cpp">
+                <h3>sikit/tests/eye_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>prbs7: period of 127 and contains both bits</strong> <code>[eye]</code> &mdash; generates 254 bits; asserts the first 127 bits equal the next 127 and both 0 and 1 appear.</li>
+                    <li><strong>nrz_waveform: each bit becomes samples_per_ui samples at +/-1</strong> <code>[eye]</code> &mdash; generates a 4-bit, 4-spu waveform; asserts each sample matches its bit at +/-1.</li>
+                    <li><strong>rc_lowpass: DC passes; sufficiently high frequency attenuated</strong> <code>[eye]</code> &mdash; low-passes a DC and a Nyquist square wave; asserts DC == 1 in steady state and the HF max settles below 0.5.</li>
+                    <li><strong>eye: clean NRZ has wide-open eye, two horizontal bands</strong> <code>[eye]</code> &mdash; builds an eye on clean NRZ; asserts max_count &gt; 0, the mid-voltage row is empty and top/bottom rows have non-zero counts.</li>
+                    <li><strong>eye: heavily filtered channel closes the eye middle</strong> <code>[eye]</code> &mdash; builds an eye on a heavily filtered NRZ; asserts the middle voltage row gains non-zero counts.</li>
+                    <li><strong>eye: build with empty input returns empty grid</strong> <code>[eye]</code> &mdash; builds with an empty waveform; asserts max_count is 0 but the grid retains its dimensions.</li>
+                    <li><strong>eye: warmup_uis skips initial transient samples</strong> <code>[eye]</code> &mdash; compares warmup=0 vs warmup=4 on a filtered waveform; asserts the warmup eye has fewer or equal max_count.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-fdm-refined-test-cpp">
+                <h3>sikit/tests/fdm_refined_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>refined: produces a finite result + reports both solves</strong> <code>[refined]</code> &mdash; runs <code>compute_z0_refined</code> at 100um cells on a 50-ohm microstrip; asserts r.ok, both iter counts &gt; 0, both z0 values in (40, 70) and Richardson result also in (40, 70).</li>
+                    <li><strong>refined: 2h solve converges in fewer iterations than h</strong> <code>[refined]</code> &mdash; runs <code>compute_z0_refined</code>; asserts iter_coarse &lt;= iter_fine.</li>
+                    <li><strong>refined: result varies smoothly with cell size</strong> <code>[refined]</code> &mdash; runs at 150um and 100um cells; asserts the two Z0 results differ by less than 10 ohms.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-fdtd3d-test-cpp">
+                <h3>sikit/tests/fdtd3d_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>fdtd3d: CFL dt formula matches the closed-form bound</strong> <code>[fdtd3d]</code> &mdash; builds an isotropic 1mm grid; asserts <code>cfl_dt(g)</code> equals the analytic <code>0.99/(c*sqrt(inv2))</code> within 1e-12 and the anisotropic dt is &gt;= the smallest-cell isotropic case.</li>
+                    <li><strong>fdtd3d: Field3D round-trips reads and writes</strong> <code>[fdtd3d]</code> &mdash; writes three values into a 4x3x2 Field3D, fills with zero; asserts size==24, written cells read back and post-fill is zero.</li>
+                    <li><strong>fdtd3d: gaussian pulse peaks at t0</strong> <code>[fdtd3d]</code> &mdash; evaluates <code>gaussian_pulse</code> at t0, t0+s and 0; asserts peak == 1, one-sigma == exp(-1), and t=0 is &lt; 1e-10.</li>
+                    <li><strong>fdtd3d: cavity_mode_freq matches Pozar formula</strong> <code>[fdtd3d]</code> &mdash; computes TE_101 for a 5x4x3 cm cavity; asserts the value matches Pozar&#x27;s <code>c/2*sqrt(1/a^2 + 1/d^2)</code> within 1e-12.</li>
+                    <li><strong>fdtd3d: solver constructs and reports memory footprint</strong> <code>[fdtd3d]</code> &mdash; builds an 8^3 solver; asserts grid().nx==8, step_count==0 and bytes() lies between 6*8^3 and 6*16^3 doubles.</li>
+                    <li><strong>fdtd3d: step without dt set throws</strong> <code>[fdtd3d]</code> &mdash; calls <code>step</code> without <code>set_dt</code>; asserts an exception is thrown.</li>
+                    <li><strong>fdtd3d: PEC walls keep tangential E pinned at zero</strong> <code>[fdtd3d]</code> &mdash; drives a Gaussian Ez source at the center of an 8^3 grid; asserts Ez at every i=0/nx and j=0/ny edge stays exactly 0 after 100 steps.</li>
+                    <li>**fdtd3d: causal propagation &mdash; probe is quiet before wave-front arrives, lit up after** `[fdtd3d]` -- drives an Ez step source at the center of a 24^3 grid, probes 10 cells in +x; asserts the probe is exactly 0 before the causal step count and &gt; 1e-9 after.</li>
+                    <li>**fdtd3d: Mur ABC absorbs the wave &mdash; much smaller residual energy than the PEC reflector** `[fdtd3d][mur]` -- pulses a 30^3 grid with PEC then Mur boundaries; asserts the volume&#x27;s Ez^2 sum after 220 steps is &lt; 20% of the PEC case.</li>
+                    <li><strong>fdtd3d: Mur ABC remains numerically stable for a long run</strong> <code>[fdtd3d][mur]</code> &mdash; runs 500 steps with no source and Mur boundary; asserts max|Ez| stays exactly 0.</li>
+                    <li><strong>fdtd3d: switching boundary mode is observable</strong> <code>[fdtd3d][mur]</code> &mdash; asserts the default boundary is PEC and <code>set_boundary(Mur1stOrder)</code> changes the getter.</li>
+                    <li><strong>fdtd3d: default material is vacuum</strong> <code>[fdtd3d][material]</code> &mdash; builds a 4^3 solver; asserts every epsr component returns 1.0 and sigma_x returns 0.</li>
+                    <li><strong>fdtd3d: set_uniform_material fills every E component</strong> <code>[fdtd3d][material]</code> &mdash; calls <code>set_uniform_material(4.2, 0.07)</code>; asserts epsr_x/y/z all read 4.2 and sigma_x is 0.07.</li>
+                    <li><strong>fdtd3d: set_material_box scopes the change to inside the box</strong> <code>[fdtd3d][material]</code> &mdash; sets a 2..5 cube to epsilon_r=9.8; asserts epsr_z is 1.0 outside and 9.8 inside.</li>
+                    <li><strong>fdtd3d: causality is slower inside a dielectric</strong> <code>[fdtd3d][material]</code> &mdash; compares vacuum vs epsilon_r=4 fills; asserts probe at step 25 is lit in vacuum but &lt; 1% of vacuum in the dielectric.</li>
+                    <li><strong>fdtd3d: conductivity dissipates stored energy</strong> <code>[fdtd3d][material]</code> &mdash; compares sigma=0 and sigma=5 Gaussian-pulsed solves; asserts the lossy box&#x27;s Ez^2 sum is &lt; 60% of the lossless case.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-fdtd-port-test-cpp">
+                <h3>sikit/tests/fdtd_port_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>fdtd-port: gaussian-modulated sinusoid is zero at t=t0</strong> <code>[fdtd-port]</code> &mdash; asserts <code>gaussian_modulated_sinusoid(t0, t0, ..., 5 GHz)</code> returns 0 and the quarter-period offset is &gt; 0.5.</li>
+                    <li><strong>fdtd-port: make_gms_drive produces the right length</strong> <code>[fdtd-port]</code> &mdash; builds a 128-sample drive; asserts size==128 and sample 0 differs from sample 64.</li>
+                    <li><strong>fdtd-port: soft source is additive (interior reads the SUM of curl update + soft drive)</strong> <code>[fdtd-port]</code> &mdash; runs a 12^3 grid with hard vs soft Ez sources; asserts after 40 steps the two source cells hold different values.</li>
+                    <li><strong>fdtd-port: well-matched (vacuum + Mur) port has small S11</strong> <code>[fdtd-port]</code> &mdash; runs two identical port solves in a Mur-bounded vacuum; asserts |S11| &lt; 1e-9 at every 1..7 GHz step (identical runs yield exact zero).</li>
+                    <li><strong>fdtd-port: PEC barrier near the port produces a large |S11| compared to the unblocked case</strong> <code>[fdtd-port]</code> &mdash; adds a PEC slab 8 cells from the port and compares to an unblocked solve; asserts |S11| at the centre frequency is &gt; 1e-5.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-fdtd-rasterize-test-cpp">
+                <h3>sikit/tests/fdtd_rasterize_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>rasterize: default mapping records copper-layer Zs</strong> <code>[fdtd-raster]</code> &mdash; builds a synthetic 2-layer board; asserts F.Cu maps to z=0 and B.Cu falls between 1.0 and 1.1 mm.</li>
+                    <li><strong>rasterize: a segment writes PEC cells on its z-slab</strong> <code>[fdtd-raster]</code> &mdash; rasterizes one 10mm segment; asserts &gt;0 cells written, the F.Cu slab cell (25,25,0) holds PEC and a higher k cell holds none.</li>
+                    <li><strong>rasterize: a via writes PEC through the stackup z range</strong> <code>[fdtd-raster]</code> &mdash; rasterizes one through-via; asserts the via cell has PEC at both k=0 and k=5.</li>
+                    <li><strong>rasterize: a filled zone marks every interior cell</strong> <code>[fdtd-raster]</code> &mdash; rasterizes a 12x10mm zone at 0.2mm grid; asserts &gt;1000 PEC cells written.</li>
+                    <li><strong>rasterize: rasterize_board reports nonzero counts on a non-trivial board</strong> <code>[fdtd-raster]</code> &mdash; rasterizes the full synthetic board; asserts 1 segment/1 via/1 zone processed with non-zero PEC counts and non-zero substrate cells.</li>
+                    <li><strong>rasterize: pec_cell_count tallies the same order as the rasteriser reports</strong> <code>[fdtd-raster]</code> &mdash; compares the solver&#x27;s pec_cell_count to the reporter&#x27;s sum; asserts the solver count is &gt;= the reporter sum.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-fft-test-cpp">
+                <h3>sikit/tests/fft_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>fft: next_power_of_2 basics</strong> <code>[fft]</code> &mdash; evaluates the helper on 0, 1, 2, 3, 1000, 1024, 1025; asserts each returns the expected next power of two.</li>
+                    <li><strong>fft: rejects non-power-of-2 size</strong> <code>[fft]</code> &mdash; calls <code>fft</code> on a 6-element vector; asserts it throws.</li>
+                    <li><strong>fft: trivial sizes are no-ops</strong> <code>[fft]</code> &mdash; runs <code>fft</code> on size 0 and size 1; asserts size 0 stays empty and size 1 is unchanged.</li>
+                    <li><strong>fft: impulse at index 0 maps to flat unit spectrum</strong> <code>[fft]</code> &mdash; transforms [1,0,...,0] of size 8; asserts every output bin is 1+0j.</li>
+                    <li><strong>fft: constant signal maps to spike at DC bin</strong> <code>[fft]</code> &mdash; transforms a constant-1 size-8 vector; asserts X[0] == 8 and all other bins are below 1e-10.</li>
+                    <li><strong>fft: forward then inverse round-trips with 1/N normalization</strong> <code>[fft]</code> &mdash; runs forward then inverse on a 64-point mixed signal; asserts each sample recovers the original within 1e-10.</li>
+                    <li><strong>fft: pure sinusoid produces a single spectral peak</strong> <code>[fft]</code> &mdash; transforms a k=17 cosine over 1024 points; asserts |X[k]| and |X[N-k]| are N/2 and all other bins are below 1e-8.</li>
+                    <li><strong>fft: linearity holds (sum of inputs -&gt; sum of spectra)</strong> <code>[fft]</code> &mdash; transforms a, b and a+b separately; asserts F(a+b) == F(a)+F(b) within 1e-10.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-headless-test-cpp">
+                <h3>sikit/tests/headless_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>cli: impedance_op succeeds on a routed net</strong> <code>[cli][impedance]</code> &mdash; runs <code>impedance_op</code> on a 50mm DATA segment; asserts rc==0 and stdout contains Z0, v_phase and eps_eff.</li>
+                    <li><strong>cli: impedance_op reports missing net</strong> <code>[cli][impedance]</code> &mdash; runs <code>impedance_op</code> on a bogus net name; asserts rc==3.</li>
+                    <li><strong>cli: impedance_op reports missing layer</strong> <code>[cli][impedance]</code> &mdash; runs <code>impedance_op</code> on layer In7.Cu; asserts rc==4.</li>
+                    <li><strong>cli: impedance_op flags a net with no segments on the layer</strong> <code>[cli][impedance]</code> &mdash; runs DATA on B.Cu (no segments there); asserts rc==5.</li>
+                    <li><strong>cli: touchstone_op writes a .s2p file with expected metadata</strong> <code>[cli][touchstone]</code> &mdash; runs <code>touchstone_op</code> from 10 MHz to 20 GHz, 100 points; asserts rc==0, the file exists and is non-empty.</li>
+                    <li><strong>cli: spice_op writes a .cir file with the required directives</strong> <code>[cli][spice]</code> &mdash; runs <code>spice_op</code> with 8 poles, 200 points; asserts rc==0 and the output contains .subckt and .ends.</li>
+                    <li><strong>cli: list_nets_op prints the net table</strong> <code>[cli][list]</code> &mdash; runs <code>list_nets_op</code>; asserts rc==0 and the output contains &quot;DATA&quot;, &quot;id&quot; and &quot;name&quot;.</li>
+                    <li><strong>cli: list_specs_op prints every shipped compliance spec</strong> <code>[cli][list]</code> &mdash; runs <code>list_specs_op</code>; asserts rc==0 and output contains &quot;PCIe Gen5&quot;, &quot;DDR4&quot;, &quot;USB&quot; and &quot;Ethernet&quot;.</li>
+                    <li><strong>cli: compliance_op reports missing spec by name</strong> <code>[cli][compliance]</code> &mdash; runs <code>compliance_op</code> with a minimal touchstone and a bogus spec name; asserts rc==3.</li>
+                    <li><strong>cli: compliance_op walks a real spec for a real touchstone</strong> <code>[cli][compliance]</code> &mdash; writes a four-point .s2p, runs <code>compliance_op</code> against &quot;PCIe Gen3&quot;; asserts rc==0 and output contains &quot;PCIe Gen3&quot;, &quot;baud&quot; and &quot;ber&quot;.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-ibis-test-cpp">
+                <h3>sikit/tests/ibis_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ibis: top-level fields parsed</strong> <code>[ibis]</code> &mdash; parses the kSample IBIS file; asserts version==&quot;5.0&quot;, component==&quot;DRV01&quot;, manufacturer==&quot;Acme&quot; and 2 models.</li>
+                    <li><strong>ibis: model type and C_comp parsed</strong> <code>[ibis]</code> &mdash; parses DRAM_OUT and DRAM_IN; asserts Output/Input types and c_comp values 3.0/2.5/3.5 pF and 1.5 pF.</li>
+                    <li><strong>ibis: pulldown V/I table parsed</strong> <code>[ibis]</code> &mdash; parses the pulldown section; asserts 4 entries with voltage -1.0/i_typ -0.020 and voltage 1.0/i_min 0.045/i_max 0.055.</li>
+                    <li><strong>ibis: pullup V/I table parsed</strong> <code>[ibis]</code> &mdash; parses the pullup section; asserts 3 entries with the first at v=0/i_typ=-0.100.</li>
+                    <li><strong>ibis: ramp dV/dt parsed</strong> <code>[ibis]</code> &mdash; parses the [Ramp] section; asserts dv_rise/dt_rise typ/min/max and dv_fall.typ all read 2.0/200ps style values.</li>
+                    <li><strong>ibis: NA tokens parse as NaN</strong> <code>[ibis]</code> &mdash; parses a snippet with NA in min/max columns; asserts c_comp.min/max and pulldown[0].i_min are NaN.</li>
+                    <li><strong>ibis: unit suffixes (p/n/u/m/k/M/G)</strong> <code>[ibis]</code> &mdash; parses C_comp 5.0p 3n 2u; asserts values are 5e-12, 3e-9, 2e-6.</li>
+                    <li><strong>ibis: model_type aliases recognized</strong> <code>[ibis]</code> &mdash; parses a model list with 3-state, I/O, Open_drain and Terminator; asserts the enum maps to Tristate/IO/OpenDrain/Terminator.</li>
+                    <li><strong>ibis: pipe comments stripped</strong> <code>[ibis]</code> &mdash; parses a sample with inline and full-line <code>|</code> comments; asserts component is still &quot;x&quot; and c_comp.typ == 1pF.</li>
+                    <li><strong>ibis: missing file throws</strong> <code>[ibis]</code> &mdash; calls <code>read_file</code> on a bogus path; asserts IbisParseError is thrown.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-impedance-test-cpp">
+                <h3>sikit/tests/impedance_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>microstrip: ~50 ohm at standard FR-4 geometry</strong> <code>[impedance]</code> &mdash; evaluates <code>microstrip_z0</code> for W=2.8mm, H=1.524mm, T=35um, er=4.4; asserts Z0 == 50 +/- 2 and <code>microstrip_in_valid_range</code> is true.</li>
+                    <li><strong>microstrip: narrower trace -&gt; higher impedance</strong> <code>[impedance]</code> &mdash; compares 1.5mm vs 3.0mm widths; asserts the narrower trace has higher Z0.</li>
+                    <li><strong>microstrip: higher epsilon_r -&gt; lower impedance</strong> <code>[impedance]</code> &mdash; compares FR-4 (er=4.4) vs Rogers (er=3.0); asserts Rogers has higher Z0.</li>
+                    <li><strong>stripline: known geometry produces ~50 ohm</strong> <code>[impedance]</code> &mdash; evaluates <code>stripline_z0</code> for W=0.2mm, B=0.6mm; asserts Z0 == 50 +/- 5.</li>
+                    <li><strong>stripline: validity check rejects too-wide trace</strong> <code>[impedance]</code> &mdash; builds params with W/B-T &gt; 0.35; asserts <code>stripline_in_valid_range</code> is false.</li>
+                    <li><strong>diff microstrip: 100 ohm at typical USB-style geometry</strong> <code>[impedance]</code> &mdash; evaluates <code>edge_coupled_microstrip_diff(50, s, h)</code>; asserts result in (60, 100), closer spacing gives lower z, and far spacing -&gt; 2*Z0 == 100 within 1 ohm.</li>
+                    <li><strong>diff stripline: monotonicity vs spacing</strong> <code>[impedance]</code> &mdash; evaluates stripline diff at three spacings; asserts close &lt; med &lt; far and far -&gt; 100 within 1 ohm.</li>
+                    <li><strong>microstrip: zero/negative inputs throw</strong> <code>[impedance]</code> &mdash; supplies zero width, zero height, negative thickness and er&lt;1; asserts each throws ImpedanceError.</li>
+                    <li><strong>stripline: zero/negative inputs throw</strong> <code>[impedance]</code> &mdash; supplies zero width and zero spacing; asserts both throw.</li>
+                    <li><strong>diff: zero-spacing limit is below 2*Z0</strong> <code>[impedance]</code> &mdash; evaluates with s=0; asserts microstrip == 52.0 and stripline == 65.3 (i.e. analytically reduced formulas).</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-mesher3d-test-cpp">
+                <h3>sikit/tests/mesher3d_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>mesher3d: empty board yields empty meshes</strong> <code>[m3d]</code> &mdash; meshes an empty 2-layer board; asserts copper, vias and dielectric meshes are all empty.</li>
+                    <li><strong>mesher3d: a single segment produces a copper box (24 verts, 36 idx)</strong> <code>[m3d]</code> &mdash; meshes one segment; asserts 240 floats (24 verts * 10) and 36 indices in copper, plus a non-empty synthesised dielectric.</li>
+                    <li><strong>mesher3d: a single via produces a cylinder mesh</strong> <code>[m3d]</code> &mdash; meshes one through-via; asserts 146 cylinder vertices (24-sided wall + two 25-vert caps).</li>
+                    <li><strong>mesher3d: explicit 4-layer stackup -&gt; multiple dielectric slabs</strong> <code>[m3d]</code> &mdash; meshes a 4-layer board with three dielectric items; asserts dielectric has 720 floats and 3*36 indices.</li>
+                    <li><strong>mesher3d: synthesized stackup fallback when items empty</strong> <code>[m3d]</code> &mdash; meshes a board with empty SiStackup; asserts a single 36-index dielectric slab is synthesised and copper is non-empty.</li>
+                    <li><strong>mesher3d: segments on non-existent layers are skipped</strong> <code>[m3d]</code> &mdash; adds segments on layer 0 and layer 99; asserts only 36 copper indices (one segment meshed).</li>
+                    <li><strong>mesher3d: copper vertices carry non-zero normals</strong> <code>[m3d]</code> &mdash; meshes one segment; asserts every vertex&#x27;s normal squared length is approximately 1.</li>
+                    <li><strong>mesher3d: component with courtyard becomes an extruded body</strong> <code>[m3d][components]</code> &mdash; adds an SOIC-8 component with courtyard 0..10mm; asserts components mesh has 240 floats and 36 indices.</li>
+                    <li><strong>mesher3d: component without courtyard falls back to pad bbox</strong> <code>[m3d][components]</code> &mdash; adds R_0402 with zero courtyard and one pad; asserts components mesh has 240 floats.</li>
+                    <li><strong>mesher3d: bottom-side component extrudes downward</strong> <code>[m3d][components]</code> &mdash; adds a QFN-32 with pads on B.Cu; asserts every component vertex z is &lt;= 0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-overlay-test-cpp">
+                <h3>sikit/tests/overlay_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>overlay: identical files give zero delta</strong> <code>[overlay]</code> &mdash; compares two identical flat-S21 files; asserts every delta_db is &lt; 1e-9 and max_abs_db is &lt; 1e-9.</li>
+                    <li><strong>overlay: 2x amplitude difference is 6 dB</strong> <code>[overlay]</code> &mdash; compares 0.5 vs 0.25 |S21|; asserts every delta_db is ~6.02 dB.</li>
+                    <li><strong>overlay: negative delta when a is quieter than b</strong> <code>[overlay]</code> &mdash; compares 0.25 vs 0.5; asserts delta_db[0] is -6.02 and max_abs_db is +6.02.</li>
+                    <li><strong>overlay: locates the worst-case frequency index</strong> <code>[overlay]</code> &mdash; injects a single 0.05 magnitude point at index 7; asserts max_index==7, max_freq_hz==8 GHz and max_abs_db ~ 20.</li>
+                    <li><strong>overlay: rejects port-count mismatch</strong> <code>[overlay]</code> &mdash; sets b.num_ports=4; asserts OverlayError is thrown.</li>
+                    <li><strong>overlay: rejects frequency-grid mismatch</strong> <code>[overlay]</code> &mdash; shifts one b.frequencies entry by 1 MHz; asserts OverlayError is thrown.</li>
+                    <li><strong>overlay: rejects out-of-range s_param_index</strong> <code>[overlay]</code> &mdash; calls with index 9 and -1; asserts both throw.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-project-test-cpp">
+                <h3>sikit/tests/project_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>project: round-trip a minimal project</strong> <code>[project]</code> &mdash; serialises a Project with just kicad_pcb; asserts the parsed version==1, kicad_pcb matches and IBIS/AMI/observed_nets are absent.</li>
+                    <li><strong>project: round-trip with IBIS, AMI, observed nets, FDM on</strong> <code>[project]</code> &mdash; serialises a full Project; asserts every field round-trips including three observed_nets and use_fdm==true.</li>
+                    <li><strong>project: rejects non-sikit S-expression</strong> <code>[project]</code> &mdash; parses &quot;(some-other-format ...)&quot; and garbage; asserts both throw ProjectIoError.</li>
+                    <li><strong>project: file save/load round-trip</strong> <code>[project]</code> &mdash; saves to a temp file and loads; asserts kicad_pcb and use_fdm round-trip.</li>
+                    <li><strong>project: tolerates missing optional sections</strong> <code>[project]</code> &mdash; parses a minimal sikit-project form; asserts kicad_pcb is set and optional fields are empty.</li>
+                    <li><strong>project: bool field accepts true/yes/on/1</strong> <code>[project]</code> &mdash; parses each truthy spelling; asserts use_fdm is true, plus &quot;false&quot; returns false.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-reference-data-test-cpp">
+                <h3>sikit/tests/reference_data_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ref-data: microstrip canonical geometries (IPC-2141A / Polar)</strong> <code>[ref]</code> &mdash; runs four canonical microstrips (50/75 ohm on FR-4 and HDI); asserts each computed Z0 is within the per-case tolerance band of the published reference.</li>
+                    <li><strong>ref-data: stripline canonical geometries</strong> <code>[ref]</code> &mdash; runs two canonical striplines (B=0.6mm and B=0.4mm); asserts each Z0 is within 10-15% of 50.</li>
+                    <li><strong>ref-data: differential microstrip Z_diff</strong> <code>[ref]</code> &mdash; runs 4/4/4 mil and 4/6/4 mil edge-coupled diff pairs; asserts the first is within 15% of 100 ohms and the second falls in (80, 110).</li>
+                    <li><strong>ref-data: FDM agrees with closed-form within budget</strong> <code>[ref]</code> &mdash; compares closed-form and FDM on a textbook 50-ohm microstrip; asserts both fall in (42, 62) and agree within 20%.</li>
+                    <li><strong>ref-data: trace impedance monotonicity sanity</strong> <code>[ref]</code> &mdash; asserts narrower trace &gt; wider trace, thicker dielectric &gt; thinner, and lower epsilon_r &gt; higher epsilon_r for Z0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-report-test-cpp">
+                <h3>sikit/tests/report_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>report: build_board_report on the demo board</strong> <code>[report]</code> &mdash; runs the report on the bundled demo board; asserts &gt;=10 nets, 4 copper layers, non-empty nets, 1 diff_pair, 1 bus and non-empty return-path violations.</li>
+                    <li><strong>report: overall_pass reflects the per-section flags</strong> <code>[report]</code> &mdash; builds the report; asserts <code>overall_pass()</code> is false and both bus_fails and return_path_fails are &gt; 0.</li>
+                    <li><strong>report: render_html emits valid HTML scaffolding</strong> <code>[report]</code> &mdash; renders the HTML; asserts the doctype, title, all four section headers and an &quot;Issues found&quot; banner are present.</li>
+                    <li><strong>report: HTML-escapes net names that contain markup chars</strong> <code>[report]</code> &mdash; injects an &quot;EVIL&lt;NET&gt;&amp;&quot; net name; asserts the rendered HTML contains the escaped form and not the raw angle brackets.</li>
+                    <li><strong>report: empty board produces a valid pass-banner report</strong> <code>[report]</code> &mdash; builds the report on an empty board; asserts <code>overall_pass()</code> and the HTML contains &quot;All checks PASS&quot;.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-return-path-test-cpp">
+                <h3>sikit/tests/return_path_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>return-path: trace fully over a covering plane has no violations</strong> <code>[returnpath]</code> &mdash; 50mm trace over a 100x20mm GND zone on In1.Cu; asserts the violations list is empty.</li>
+                    <li><strong>return-path: board with no reference plane flags the segment</strong> <code>[returnpath]</code> &mdash; omits the GND zone; asserts one violation with off_plane_fraction==1.0 and reference_layer==1.</li>
+                    <li><strong>return-path: trace half off the plane reports ~0.5 fraction</strong> <code>[returnpath]</code> &mdash; 100mm trace over a 0..50mm GND zone; asserts off_plane_fraction in (0.3, 0.7) and severity_m == fraction*length.</li>
+                    <li><strong>return-path: threshold filters out near-clean traces</strong> <code>[returnpath]</code> &mdash; 50mm trace over a 0..49.9mm zone with default 5% then 10% threshold; asserts the loose-threshold run returns empty.</li>
+                    <li><strong>return-path: violations sorted worst-first</strong> <code>[returnpath]</code> &mdash; adds a half-off trace plus a fully-off trace; asserts two violations with the fully-off one sorted first.</li>
+                    <li><strong>return-path: non-routable nets are skipped</strong> <code>[returnpath]</code> &mdash; sets segment net_id to 0; asserts the violations list is empty.</li>
+                    <li><strong>return-path: single-copper-layer board reports the segment as lacking any reference</strong> <code>[returnpath]</code> &mdash; erases the In1.Cu layer; asserts one violation with reference_layer==-1 and off_plane_fraction==1.</li>
+                    <li><strong>return-path: zero-length segment is skipped</strong> <code>[returnpath]</code> &mdash; adds a zero-length segment; asserts the violations list is empty.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-rlgc-test-cpp">
+                <h3>sikit/tests/rlgc_test.cpp</h3>
+                <ul class="test-list">
+                    <li>**rlgc: 2-conductor microstrip &mdash; C is positive on diagonal, negative off** `[rlgc]` -- runs `compute_rlgc` on two coupled microstrips; asserts r.ok, n==2, diagonal C &gt; 0, off-diagonal C &lt; 0 and |off| &lt; diagonal.</li>
+                    <li><strong>rlgc: C matrix is approximately symmetric</strong> <code>[rlgc]</code> &mdash; runs <code>compute_rlgc</code>; asserts |C(0,1) - C(1,0)| / avg &lt; 10%.</li>
+                    <li><strong>rlgc: L self-inductance is positive</strong> <code>[rlgc]</code> &mdash; runs <code>compute_rlgc</code>; asserts L(0,0) and L(1,1) are positive.</li>
+                    <li><strong>rlgc: closer spacing -&gt; larger NEXT</strong> <code>[rlgc]</code> &mdash; compares 1.2mm vs 0.4mm centre-to-centre; asserts |k_near_end| for the closer pair is larger.</li>
+                    <li><strong>rlgc: same conductor crosstalk returns zero</strong> <code>[rlgc]</code> &mdash; calls <code>crosstalk_for_pair(r, 0, 0)</code>; asserts k_near_end == 0 and modal_mismatch == 0.</li>
+                    <li><strong>rlgc: 3-signal-conductor matrix is 3x3</strong> <code>[rlgc]</code> &mdash; runs <code>compute_rlgc</code> on three signals + ground; asserts C and L matrices are both 3x3.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-roughness-test-cpp">
+                <h3>sikit/tests/roughness_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>roughness: None returns factor 1 at any frequency</strong> <code>[roughness]</code> &mdash; builds a default RoughnessSpec; asserts <code>roughness_factor</code> returns 1.0 at 1 GHz and 50 GHz.</li>
+                    <li><strong>roughness: skin depth shrinks as sqrt(freq)</strong> <code>[roughness]</code> &mdash; evaluates skin_depth at 1 GHz and 16 GHz; asserts the 16 GHz value is 1/4 of the 1 GHz value.</li>
+                    <li><strong>roughness: HJ factor monotonically rises with Delta/delta</strong> <code>[roughness]</code> &mdash; compares HJ at 0.5um and 3.0um RMS; asserts the rougher copper has a larger factor.</li>
+                    <li><strong>roughness: HJ factor at high freq approaches the 2x asymptote</strong> <code>[roughness]</code> &mdash; HJ at 100 GHz with 3.0um RMS; asserts the factor is in (1.9, 2.0].</li>
+                    <li><strong>roughness: HJ factor at low freq approaches 1</strong> <code>[roughness]</code> &mdash; HJ at 1 MHz with 0.5um RMS; asserts the factor is ~1 within 0.05.</li>
+                    <li><strong>roughness: Huray factor non-trivial</strong> <code>[roughness]</code> &mdash; Huray with 0.5um spheres, 1e12 density, 0.5 coverage at 25 GHz; asserts the factor &gt; 1.</li>
+                    <li><strong>synthesize: rough copper produces more loss than smooth</strong> <code>[roughness][synth]</code> &mdash; compares synthesised channels with smooth vs 2um HJ roughness at 20 GHz; asserts the rough channel has lower |S21|.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-schematic-topology-test-cpp">
+                <h3>sikit/tests/schematic_topology_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>schematic-topology: power-net heuristic catches obvious rails</strong> <code>[schematic-topology]</code> &mdash; queries <code>looks_like_power_net</code> on VDD/VCC3V3/GND/AGND/+3V3/-12V; asserts each is true and USB_DP/DQ0 are false.</li>
+                    <li><strong>schematic-topology: driver and receiver classification</strong> <code>[schematic-topology]</code> &mdash; derives the TX_LANE topology; asserts net_code==2, 2 endpoints, exactly one driver (U1), one passive (R1) and no driver problem.</li>
+                    <li><strong>schematic-topology: bidirectional pins count as drivers</strong> <code>[schematic-topology]</code> &mdash; derives the DQ0 topology; asserts 3 drivers, 0 receivers and <code>has_driver_problem</code> true (multi-drop tripping the heuristic).</li>
+                    <li><strong>schematic-topology: zero-driver net is flagged</strong> <code>[schematic-topology]</code> &mdash; derives NO_DRIVER; asserts no drivers, 2 receivers and a driver problem.</li>
+                    <li><strong>schematic-topology: contention (two drivers) is flagged</strong> <code>[schematic-topology]</code> &mdash; derives CONTENTION; asserts 2 drivers and a driver problem.</li>
+                    <li><strong>schematic-topology: missing pintype lands in Unspecified</strong> <code>[schematic-topology]</code> &mdash; derives RAW; asserts every endpoint role is Unspecified and the net has a driver problem.</li>
+                    <li><strong>schematic-topology: unknown net returns empty</strong> <code>[schematic-topology]</code> &mdash; derives a bogus net; asserts endpoints empty, net_code==0 and the bogus name is preserved.</li>
+                    <li><strong>schematic-topology: bulk derivation skips power rails</strong> <code>[schematic-topology]</code> &mdash; runs <code>derive_all_topologies</code>; asserts six non-power nets are returned and VDD is filtered.</li>
+                    <li><strong>schematic-topology: role_name covers every enum</strong> <code>[schematic-topology]</code> &mdash; asserts <code>role_name</code> returns &quot;driver&quot;, &quot;receiver&quot;, &quot;passive&quot;, &quot;power&quot;, &quot;nc&quot; and &quot;unspecified&quot; for each role.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-skew-test-cpp">
+                <h3>sikit/tests/skew_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>skew: matched pair reports zero skew</strong> <code>[skew]</code> &mdash; runs <code>compute_diff_pair_skews</code> on a matched USB pair; asserts skew_m and skew_ps are &lt; 1e-9 and <code>exceeds_budget</code> is false.</li>
+                    <li><strong>skew: mismatched pair reports correct sign and magnitude</strong> <code>[skew]</code> &mdash; 50.0 vs 50.4mm PCIE pair; asserts skew_m == -0.4mm and skew_ps in (1.5, 5.0) ps.</li>
+                    <li><strong>skew: budget threshold flips the FAIL flag</strong> <code>[skew]</code> &mdash; runs with a 1 ps budget; asserts the PCIE pair&#x27;s <code>exceeds_budget</code> is true.</li>
+                    <li><strong>skew: empty board returns empty result</strong> <code>[skew]</code> &mdash; runs on an empty Board; asserts the result is empty.</li>
+                    <li><strong>skew: board without diff pairs returns empty result</strong> <code>[skew]</code> &mdash; adds single-ended SCK; asserts the result is empty.</li>
+                    <li><strong>skew: positive v_phase is reported back</strong> <code>[skew]</code> &mdash; runs on the two-pair board; asserts every row&#x27;s v_phase falls in (1e8, 3e8) m/s.</li>
+                    <li><strong>skew: zero-length pair is skipped (no segments anywhere)</strong> <code>[skew]</code> &mdash; adds DATA_P/DATA_N with no segments; asserts the result is empty.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-smoke-test-cpp">
+                <h3>sikit/tests/smoke_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>smoke: arithmetic works</strong> <code>[smoke]</code> &mdash; asserts 1 + 1 == 2.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-sparam-test-cpp">
+                <h3>sikit/tests/sparam_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>sparam: s_to_t round-trip is identity</strong> <code>[sparam]</code> &mdash; runs <code>t_to_s(s_to_t(s))</code> on a non-trivial complex S matrix; asserts every entry matches the original within 1e-12.</li>
+                    <li><strong>sparam: cascading passthrough leaves network unchanged</strong> <code>[sparam]</code> &mdash; cascades passthrough with a 3 dB attenuator both ways; asserts |S21| equals the attenuator&#x27;s |S21|.</li>
+                    <li><strong>sparam: cascaded attenuators add in dB</strong> <code>[sparam]</code> &mdash; cascades 3 dB and 6 dB attenuators; asserts the total IL is 9 dB.</li>
+                    <li><strong>sparam: cascading three attenuators stacks</strong> <code>[sparam]</code> &mdash; cascades 1, 2 and 3 dB attenuators; asserts the total IL is 6 dB.</li>
+                    <li><strong>sparam: zero-S21 throws on s_to_t</strong> <code>[sparam]</code> &mdash; supplies a zero S-matrix; asserts SParamError is thrown.</li>
+                    <li><strong>sparam: insertion / return loss in dB</strong> <code>[sparam]</code> &mdash; evaluates IL(|S21|=0.5) and RL(|S11|=0.1); asserts 6.02 dB and 20 dB.</li>
+                    <li><strong>sparam: touchstone cascade is frequency-by-frequency</strong> <code>[sparam]</code> &mdash; cascades two 2-port Touchstone files at two frequencies; asserts IL at 1 GHz is 9 dB and at 2 GHz is 3 dB.</li>
+                    <li><strong>sparam: touchstone cascade rejects mismatched grids</strong> <code>[sparam]</code> &mdash; supplies files with one differing frequency; asserts SParamError is thrown.</li>
+                    <li><strong>sparam: single-ended-to-differential basics</strong> <code>[sparam]</code> &mdash; converts a 4-port passthrough to differential; asserts |Sdd21| == 1.</li>
+                    <li>**sparam: mixed-mode 4x4 &mdash; ideal passthrough has Sdd21=1, Sdc=0** `[sparam]` -- converts a PNPN passthrough to mixed-mode; asserts |Sdd21|=1, |Sdd11|=0, |Sdc21|=0, |Scd21|=0 and |Scc21|=1.</li>
+                    <li><strong>sparam: mixed-mode PPNN convention</strong> <code>[sparam]</code> &mdash; converts a PPNN passthrough; asserts |Sdd21|=1, |Scc21|=1 and |Sdc21|=0.</li>
+                    <li><strong>sparam: skewed pair leaks differential-&gt;common (Sdc != 0)</strong> <code>[sparam]</code> &mdash; imbalances N (0.7) vs P (1.0); asserts |Scd21| &gt; 0.01.</li>
+                    <li><strong>sparam: to_mixed_mode round-trips a TouchstoneFile</strong> <code>[sparam]</code> &mdash; builds an ideal 4-port and converts at 1 GHz; asserts |Sdd21|=1 and |Scc21|=1.</li>
+                    <li><strong>sparam: to_mixed_mode rejects non-4-port files</strong> <code>[sparam]</code> &mdash; supplies a 2-port file; asserts SParamError is thrown.</li>
+                    <li><strong>sparam: TDR of zero-reflection line gives Z ~= Zref</strong> <code>[sparam][tdr]</code> &mdash; runs TDR on S11=0 across 128 points; asserts every Z(t) is within 1 ohm of 50.</li>
+                    <li><strong>sparam: TDR of |S11|=0.2 short reflection moves Z away from Zref</strong> <code>[sparam][tdr]</code> &mdash; runs TDR on constant S11=0.2; asserts the peak-to-peak excursion of Z(t) exceeds 2 ohms.</li>
+                    <li><strong>sparam: TDR rejects bad input</strong> <code>[sparam][tdr]</code> &mdash; supplies a single-point spectrum and a mismatched-length pair; asserts both return empty TDRs.</li>
+                    <li><strong>sparam: TDT of perfect passthrough is monotonically rising</strong> <code>[sparam][tdt]</code> &mdash; runs TDT on S21=1 across 256 points; asserts the peak |step response| exceeds 0.1.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-spice-export-test-cpp">
+                <h3>sikit/tests/spice_export_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>spice_export: subckt skeleton has the required directives</strong> <code>[spice]</code> &mdash; exports a 2-pole fit with subckt_name CHAN; asserts the output contains &quot;.subckt CHAN in out&quot;, &quot;.ends CHAN&quot; and &quot;B_out out 0 V=&quot;.</li>
+                    <li><strong>spice_export: emits one R and one C per pole</strong> <code>[spice]</code> &mdash; exports a 2-pole fit; asserts exactly 2 lines start with R and 2 with C.</li>
+                    <li><strong>spice_export: capacitor values are C_n = -1/p_n</strong> <code>[spice]</code> &mdash; exports poles -1e9 and -2e10; asserts &quot;C0 ... 1.000000e-09&quot; and &quot;C1 ... 5.000000e-11&quot; appear.</li>
+                    <li><strong>spice_export: summing source includes residues and d-term</strong> <code>[spice]</code> &mdash; exports a fit; asserts the output references V(in), V(n0) and V(n1).</li>
+                    <li><strong>spice_export: header carries the fit summary when enabled</strong> <code>[spice]</code> &mdash; sets include_header=true; asserts the output contains &quot;poles      = 2&quot;, &quot;converged  = yes&quot; and &quot;rms error  =&quot;.</li>
+                    <li><strong>spice_export: header suppressed when disabled</strong> <code>[spice]</code> &mdash; sets include_header=false; asserts &quot;Vector-fit summary&quot; is absent.</li>
+                    <li><strong>spice_export: rejects invalid subckt names</strong> <code>[spice]</code> &mdash; tries leading-digit, space and empty names; asserts each throws.</li>
+                    <li><strong>spice_export: roundtrip through a synthetic Touchstone</strong> <code>[spice]</code> &mdash; builds a 200-point Touchstone matching the 2-pole fit and runs <code>spice_subckt_from_touchstone</code>; asserts the output has &quot;.subckt TEST in out&quot; and 2 R/C lines.</li>
+                    <li><strong>spice_export: write_spice_subckt produces a readable file</strong> <code>[spice]</code> &mdash; writes to a temp file; asserts the file is readable and contains &quot;.subckt TEST_FILE&quot;.</li>
+                    <li><strong>spice_export: throws on empty Touchstone</strong> <code>[spice]</code> &mdash; runs <code>spice_subckt_from_touchstone</code> on an empty file; asserts it throws.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-stat-eye-test-cpp">
+                <h3>sikit/tests/stat_eye_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>stat-eye: clean pulse opens to cursor amplitude</strong> <code>[stateye][pda]</code> &mdash; runs <code>peak_distortion_eye</code> on a clean cursor SBR; asserts samples_per_ui==spui, eye_height==2.0, eye_width==1.0.</li>
+                    <li><strong>stat-eye: ISI tap closes the eye proportionally</strong> <code>[stateye][pda]</code> &mdash; runs PDA on a 0.3 post-cursor; asserts eye_height == 1.4 and width == 1.0.</li>
+                    <li><strong>stat-eye: empty SBR yields empty envelope</strong> <code>[stateye]</code> &mdash; runs PDA and <code>statistical_eye</code> on empty SBR; asserts both return empty maps.</li>
+                    <li><strong>stat-eye: statistical eye on clean pulse has 0 BER inside eye</strong> <code>[stateye][stat]</code> &mdash; runs <code>statistical_eye</code> on the clean pulse; asserts BER at v_mid is ~0 across every UI phase.</li>
+                    <li><strong>stat-eye: BER is highest at extreme thresholds</strong> <code>[stateye][stat]</code> &mdash; runs on the ISI SBR; asserts BER at the topmost and bottommost voltage rows is ~0.5.</li>
+                    <li><strong>stat-eye: bathtub_from_stat_eye returns per-UI BER</strong> <code>[stateye][stat]</code> &mdash; runs and extracts bathtub; asserts the result has spui entries with each value in [0, 0.5].</li>
+                    <li><strong>stat-eye: compute_sbr returns nonempty for a valid channel</strong> <code>[stateye][sbr]</code> &mdash; runs <code>compute_sbr</code> on a passthrough Touchstone at 5 Gbaud, 16 spui; asserts the SBR is non-empty and the max amplitude is &gt; 0.01.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-topology-test-cpp">
+                <h3>sikit/tests/topology_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>topology: empty channel cascades to a passthrough 2-port</strong> <code>[topology]</code> &mdash; cascades an empty Channel at 1/5/10 GHz; asserts |S11|=|S22|=0 and |S21|=|S12|=1.</li>
+                    <li><strong>topology: single TraceBlock matches direct synthesize_channel</strong> <code>[topology]</code> &mdash; compares a Channel with one TraceBlock to direct <code>synthesize_channel</code>; asserts every S-parameter agrees within 1e-9 relative + 1e-12 abs.</li>
+                    <li><strong>topology: LumpedBlock series-R inserts insertion loss</strong> <code>[topology][lumped]</code> &mdash; adds a 10-ohm series R in a 50-ohm system; asserts |S21| == 0.909 within 0.005.</li>
+                    <li><strong>topology: LumpedBlock shunt-C rolls off at high frequency</strong> <code>[topology][lumped]</code> &mdash; adds a 1 pF shunt at 100 MHz / 1 GHz / 10 GHz; asserts |S21| is strictly decreasing.</li>
+                    <li><strong>topology: IdealLineBlock matched to z_ref is lossless and phase-shifts only</strong> <code>[topology][line]</code> &mdash; adds a 50-ohm line of 50mm at v_p=1.5e8 in a 50-ohm system; asserts |S11|=0 and |S21|=1.</li>
+                    <li><strong>topology: cascaded ideal line phases add</strong> <code>[topology][line]</code> &mdash; compares one vs two 50mm line cascades at 5 GHz; asserts 2*phase1 == phase2 mod 2*pi within 1e-6.</li>
+                    <li><strong>topology: ViaBlock contributes via insertion loss</strong> <code>[topology][via]</code> &mdash; adds a 1.6mm through-via; asserts low-freq |S21| &gt; 0.95 and high-freq |S21| is smaller.</li>
+                    <li><strong>topology: TouchstoneBlock wraps an external 2-port</strong> <code>[topology][touchstone]</code> &mdash; wraps a 2-port file with |S21|=0.8 at 1 GHz and 0.5 at 10 GHz; asserts the cascade output matches at each frequency within 0.01.</li>
+                    <li><strong>topology: TouchstoneBlock rejects non-2-port input</strong> <code>[topology][touchstone]</code> &mdash; constructs a TouchstoneBlock from a 4-port file; asserts it throws.</li>
+                    <li><strong>topology: a realistic chain has compounded insertion loss</strong> <code>[topology]</code> &mdash; compares a trace-only channel to trace + via + trace; asserts the full chain has lower |S21| at 5 GHz.</li>
+                    <li><strong>topology: clear() resets the block list</strong> <code>[topology]</code> &mdash; adds a block, clears, cascades; asserts empty() is true and the result is a passthrough.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-touchstone-csv-test-cpp">
+                <h3>sikit/tests/touchstone_csv_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ts-csv: header row is present and correct</strong> <code>[ts-csv]</code> &mdash; exports a 2-port file to CSV; asserts the first line begins with &quot;freq_hz,s11_mag_db,...&quot;.</li>
+                    <li><strong>ts-csv: matched line row has S11 = -inf dB</strong> <code>[ts-csv]</code> &mdash; exports a matched line; asserts the CSV contains &quot;1.000000e+09&quot; and &quot;-inf&quot;.</li>
+                    <li><strong>ts-csv: S21 magnitudes drop with the second row&#x27;s lossy entry</strong> <code>[ts-csv]</code> &mdash; parses the 2 GHz row; asserts s21_mag_db is in (-3, 0).</li>
+                    <li><strong>ts-csv: rejects 1-port files</strong> <code>[ts-csv]</code> &mdash; exports a 1-port file; asserts TouchstoneParseError is thrown.</li>
+                    <li><strong>ts-csv: rejects malformed s_matrices</strong> <code>[ts-csv]</code> &mdash; exports a 2-port with only one S-matrix entry; asserts TouchstoneParseError is thrown.</li>
+                    <li><strong>ts-csv: z_in equals Zref for perfectly matched port</strong> <code>[ts-csv]</code> &mdash; parses the 1 GHz row; asserts z_in_real == 50.0 and z_in_imag == 0 within 1e-6.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-touchstone-test-cpp">
+                <h3>sikit/tests/touchstone_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>touchstone: parse RI 2-port</strong> <code>[touchstone]</code> &mdash; parses a sample RI .s2p; asserts num_ports==2, format==RealImaginary, Zref==50, two frequencies and column-major S-matrix entries match the source.</li>
+                    <li><strong>touchstone: MA format converts to same complex values as RI</strong> <code>[touchstone]</code> &mdash; parses the same data in MA and RI formats; asserts S-matrix entries agree within 1e-6.</li>
+                    <li><strong>touchstone: DB format converts magnitude correctly</strong> <code>[touchstone]</code> &mdash; parses a DB-format file with -6.02 dB; asserts |S| == 0.5 within 1e-4 and imag == 0.</li>
+                    <li><strong>touchstone: frequency unit MHz scales to Hz</strong> <code>[touchstone]</code> &mdash; parses an MHz file; asserts frequency_scale==1e6 and frequencies[0]==1e9.</li>
+                    <li><strong>touchstone: GHz unit</strong> <code>[touchstone]</code> &mdash; parses a GHz file with Zref=75; asserts reference_impedance==75 and the 2.5 GHz frequency is parsed.</li>
+                    <li><strong>touchstone: 4-port file is row-major in file, column-major in storage</strong> <code>[touchstone]</code> &mdash; parses a 16-entry 4-port row-major matrix; asserts file value at row r, col c lands at storage index r + c*4.</li>
+                    <li><strong>touchstone: multi-line data record spans line breaks</strong> <code>[touchstone]</code> &mdash; parses a 2-port with data split across lines; asserts the S-matrix recovers correctly.</li>
+                    <li><strong>touchstone: comments and blank lines ignored</strong> <code>[touchstone]</code> &mdash; parses a file with <code>!</code> comments and blank lines; asserts two frequencies parse.</li>
+                    <li><strong>touchstone: missing option line throws</strong> <code>[touchstone]</code> &mdash; parses data without <code>#</code>; asserts TouchstoneParseError is thrown.</li>
+                    <li><strong>touchstone: wrong data count for num_ports throws</strong> <code>[touchstone]</code> &mdash; supplies 8 floats for a 2-port (needs 9); asserts it throws.</li>
+                    <li><strong>touchstone: unknown format throws</strong> <code>[touchstone]</code> &mdash; supplies &quot;S XX&quot; as format; asserts it throws.</li>
+                    <li><strong>touchstone: non-S parameter type throws (Y/Z not supported v0)</strong> <code>[touchstone]</code> &mdash; supplies a Y-parameter file; asserts it throws.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-touchstone-v2-test-cpp">
+                <h3>sikit/tests/touchstone_v2_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>touchstone v2: minimal v2 file parses with version=2 set</strong> <code>[touchstone][v2]</code> &mdash; parses a <code>[Version] 2.0</code> 12_21 row-major file; asserts version==2, two_port_order==RowMajor, two frequencies and the column-major S-matrix lays out correctly.</li>
+                    <li><strong>touchstone v2: [Number of Ports] overrides filename hint</strong> <code>[touchstone][v2]</code> &mdash; passes num_ports=1 to a file declaring 2 ports; asserts the keyword wins (num_ports==2).</li>
+                    <li><strong>touchstone v2: [Reference] populates per-port impedance vector</strong> <code>[touchstone][v2]</code> &mdash; parses a 4-port with <code>[Reference] 50 50 100 100</code>; asserts port_impedances has 4 entries with port 2 == 100 and the scalar reference_impedance == 50.</li>
+                    <li><strong>touchstone v2: unknown keywords are skipped</strong> <code>[touchstone][v2]</code> &mdash; parses a file with <code>[Information]</code> and <code>[Comments]</code>; asserts the reader still produces a 1-port with the right data.</li>
+                    <li><strong>touchstone v2: v1 files still parse via the v1 path</strong> <code>[touchstone][v2]</code> &mdash; parses a no-<code>[Version]</code> file; asserts version==1 and the S-matrix is unchanged.</li>
+                    <li><strong>touchstone v2: rejects [Matrix Format] other than Full</strong> <code>[touchstone][v2]</code> &mdash; parses a file with <code>[Matrix Format] Lower</code>; asserts TouchstoneParseError is thrown.</li>
+                    <li><strong>touchstone v2: writer emits the [Version] keyword block</strong> <code>[touchstone][v2]</code> &mdash; writes a v2 file; asserts the output contains <code>[Version] 2.0</code>, <code>[Number of Ports] 2</code>, <code>[Network Data]</code> and <code>[End]</code>.</li>
+                    <li><strong>touchstone v2: writer emits [Reference] when port_impedances set</strong> <code>[touchstone][v2]</code> &mdash; writes a 4-port with port_impedances [50,50,100,100]; asserts the output contains <code>[Reference]</code>, <code> 50</code> and <code> 100</code>.</li>
+                    <li><strong>touchstone v2: v1 writer output omits the v2 keyword block</strong> <code>[touchstone][v2]</code> &mdash; writes a v1 file; asserts <code>[Version]</code> and <code>[Network Data]</code> are absent and the <code># Hz S RI R</code> line is present.</li>
+                    <li><strong>touchstone v2: writer-then-reader round-trip preserves S-matrices</strong> <code>[touchstone][v2]</code> &mdash; writes and reads a 2-port v2 file; asserts frequencies and S-matrices match within 1e-9.</li>
+                    <li><strong>touchstone v2: writer round-trip carries port_impedances back</strong> <code>[touchstone][v2]</code> &mdash; writes a 4-port with port_impedances; asserts the reader recovers the same vector.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-touchstone-writer-test-cpp">
+                <h3>sikit/tests/touchstone_writer_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ts-write: round-trip 2-port preserves complex S values</strong> <code>[ts-write]</code> &mdash; writes and reads a 2-port file; asserts frequencies and S-matrix entries match within 1e-9.</li>
+                    <li><strong>ts-write: round-trip 4-port preserves row-major &lt;-&gt; column-major</strong> <code>[ts-write]</code> &mdash; writes and reads a 4-port file with entries 1..16; asserts all 16 entries round-trip.</li>
+                    <li><strong>ts-write: emits Hz units and RI format</strong> <code>[ts-write]</code> &mdash; writes a 2-port; asserts the output contains &quot;# Hz S RI R&quot;.</li>
+                    <li><strong>ts-write: reference impedance preserved</strong> <code>[ts-write]</code> &mdash; writes with reference_impedance=75 and re-reads; asserts the loaded file reports 75.</li>
+                    <li><strong>ts-write: rejects port-count mismatch</strong> <code>[ts-write]</code> &mdash; supplies a 2-port file with only one S entry; asserts TouchstoneParseError is thrown.</li>
+                    <li><strong>ts-write: rejects freq vs matrix length mismatch</strong> <code>[ts-write]</code> &mdash; adds an extra frequency without adding a matrix; asserts TouchstoneParseError is thrown.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-trace-impedance-test-cpp">
+                <h3>sikit/tests/trace_impedance_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>trace impedance: F.Cu uses microstrip, inner uses stripline</strong> <code>[trace]</code> &mdash; runs <code>compute_one</code> on layers 0, 1 and 31; asserts all Z0 &gt; 0, outer == bottom and outer != inner.</li>
+                    <li><strong>trace impedance: zero width returns invalid</strong> <code>[trace]</code> &mdash; runs <code>compute_one(0.0, ...)</code>; asserts z0==0 and <code>in_valid_range</code> is false.</li>
+                    <li><strong>trace impedance: compute_all skips non-copper segments</strong> <code>[trace]</code> &mdash; adds segments on F.Cu and F.SilkS; asserts only one result with the copper layer.</li>
+                    <li><strong>trace impedance: per-segment index lines up with input order</strong> <code>[trace]</code> &mdash; adds three F.Cu segments of increasing width; asserts segment_index matches input order and z0 decreases with width.</li>
+                    <li><strong>color_for_error: tolerance bands</strong> <code>[trace]</code> &mdash; evaluates 0%, 7%, 20% error; asserts green has g&gt;r, yellow has r&gt;b and g&gt;b, red has r&gt;g.</li>
+                    <li><strong>color_for_error: zero target returns gray</strong> <code>[trace]</code> &mdash; queries with target=0; asserts r==g==b==0.5.</li>
+                    <li><strong>from_board: empty stackup -&gt; generic FR-4 defaults</strong> <code>[trace]</code> &mdash; builds AnalysisStackup from an empty board; asserts <code>from_real_stackup</code> is false, epsilon_r==4.4 and outer_dielectric_height==0.2mm.</li>
+                    <li><strong>from_board: picks up dielectric below F.Cu</strong> <code>[trace]</code> &mdash; adds an F.Cu copper + 0.15mm/er=3.8 dielectric SiStackup; asserts <code>from_real_stackup</code> is true and the dielectric values are read.</li>
+                    <li><strong>engine: FDM and closed-form agree to within ~25% on microstrip</strong> <code>[trace]</code> &mdash; runs the canonical 50-ohm microstrip; asserts both Z0 &gt; 0 and relative difference &lt; 25%.</li>
+                    <li><strong>diff FDM: Z_diff in the right neighbourhood for ~100 ohm geometry</strong> <code>[trace]</code> &mdash; runs <code>compute_diff_z0_fdm</code> for W=1.5mm/S=0.5mm on 1mm FR-4; asserts z_diff in (60, 150) and z_diff &gt; 1.5 * single-ended Z0.</li>
+                    <li><strong>diff FDM: closer spacing yields lower Z_diff</strong> <code>[trace]</code> &mdash; compares S=1.0mm vs 0.2mm; asserts the closer spacing has lower z_diff.</li>
+                    <li><strong>engine: compute_all caches FDM results per (width, layer)</strong> <code>[trace]</code> &mdash; adds four identical-width segments and runs FDM <code>compute_all</code>; asserts every segment has the same z0 (cache hit) and z0 &gt; 0.</li>
+                    <li><strong>diff closed-form: edge-coupled microstrip Z_diff is in expected band</strong> <code>[trace]</code> &mdash; runs <code>compute_diff_z0_closed_form</code> for W=1.5mm/S=0.5mm; asserts z in (60, 130) and a tighter S gives lower z.</li>
+                    <li><strong>compute_diff_pairs: finds pairs and computes Z_diff per pair</strong> <code>[trace]</code> &mdash; adds USB_DP_P/N segments with spacing 0.30mm and 0.20mm widths; asserts one pair with base USB_DP, trace_width 0.2mm, spacing 0.10mm, four segment indices.</li>
+                    <li><strong>compute_diff_pairs: spacing derived from parallel geometry</strong> <code>[trace]</code> &mdash; adds two parallel 0.15mm traces 0.30mm apart; asserts spacing == 0.15mm.</li>
+                    <li><strong>compute_diff_pairs: spacing falls back to S=W if no parallel pair</strong> <code>[trace]</code> &mdash; adds two perpendicular traces; asserts spacing == trace_width (0.20mm).</li>
+                    <li><strong>compute_diff_pairs: returns empty when no diff pairs exist</strong> <code>[trace]</code> &mdash; adds just a VCC net; asserts the result is empty.</li>
+                    <li><strong>from_board: stripline B = sum of dielectric above + below inner copper</strong> <code>[trace]</code> &mdash; builds an F.Cu/In1/B.Cu stack with 0.10mm prepreg + 0.30mm core; asserts <code>inner_plane_separation</code> == 0.40mm.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-vector-fit-test-cpp">
+                <h3>sikit/tests/vector_fit_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>vector_fit: recovers a single-pole real model</strong> <code>[vectorfit]</code> &mdash; builds H(s) = r/(s-p) + d at 200 log-spaced points; asserts the fit finds one pole with rms_error &lt; 1e-6.</li>
+                    <li><strong>vector_fit: recovers a three-pole real model</strong> <code>[vectorfit]</code> &mdash; builds a three-pole rational model at 300 points; asserts rms_error &lt; 1e-3 and <code>evaluate_fit</code> matches H within 1e-3 relative.</li>
+                    <li><strong>vector_fit: poles come out negative (causal, stable)</strong> <code>[vectorfit]</code> &mdash; overparameterises (5 poles for 3 true); asserts every fitted pole is negative.</li>
+                    <li><strong>vector_fit: rejects malformed input</strong> <code>[vectorfit]</code> &mdash; supplies empty, size-mismatched, too-few-samples and unsorted-frequency inputs; asserts each throws VectorFitError.</li>
+                    <li><strong>vector_fit: many-pole fit of a low-pass channel converges to a sensible model</strong> <code>[vectorfit]</code> &mdash; fits 8 real poles spread over 4 decades at 400 points with max_iter=16; asserts rms_error &lt; 0.02.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="sikit-tests-via-model-test-cpp">
+                <h3>sikit/tests/via_model_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>via_lumped: sensible L and C for canonical PCB via</strong> <code>[via]</code> &mdash; evaluates a 1.6mm/0.3mm/0.6mm/1.0mm stubless via; asserts L_barrel in (0.1, 5) nH, C_pad in (10 fF, 5 pF) and Z_stub in (10, 200) ohms.</li>
+                    <li><strong>via_lumped: L scales with ln(antipad/drill)</strong> <code>[via]</code> &mdash; compares 1.0mm vs 2.0mm antipad diameter; asserts the bigger antipad has larger L_barrel.</li>
+                    <li><strong>via_lumped: stub resonance at expected frequency</strong> <code>[via]</code> &mdash; adds a 1mm stub; asserts the resonance lands near 36.2 GHz within 2 GHz.</li>
+                    <li><strong>compute_via_s2p: rejects bad geometry</strong> <code>[via]</code> &mdash; sets drill=0, antipad&lt;=drill or total_length=0; asserts each throws.</li>
+                    <li><strong>compute_via_s2p: stubless via passes through at low freq</strong> <code>[via]</code> &mdash; evaluates at 1/10/100 MHz; asserts |S21| ~ 1 within 0.005.</li>
+                    <li><strong>compute_via_s2p: insertion loss grows with frequency</strong> <code>[via]</code> &mdash; sweeps 100 MHz to 20 GHz; asserts at least 3 of 4 steps show a drop in |S21|.</li>
+                    <li><strong>compute_via_s2p: stub creates a deep |S21| notch near resonance</strong> <code>[via]</code> &mdash; sweeps a 1mm-stub via across 5..60 GHz; asserts the min |S21| is less than 50% of the off-resonance level.</li>
+                    <li><strong>compute_via_s2p: 2-port file shape matches grid</strong> <code>[via]</code> &mdash; evaluates at four frequencies; asserts num_ports==2, four matrices and 4 entries per matrix.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="pdnkit-power-delivery-network" class="newsblock">
+            <h2>pdnkit (power delivery network)</h2>
+            <div class="file-block" id="pdnkit-tests-cavity-model-test-cpp">
+                <h3>pdnkit/tests/cavity_model_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>cavity: DC behavior matches parallel-plate capacitor</strong> <code>[cavity]</code> &mdash; evaluates 100x100mm FR-4 cavity at 100 Hz with tan_delta=0; asserts |Z| matches 1/(omega*C_pp) within 1e-4 and the imaginary part is negative.</li>
+                    <li><strong>cavity: reciprocity Z(p1,p2) == Z(p2,p1)</strong> <code>[cavity]</code> &mdash; evaluates a 80x60mm cavity at 100 MHz between two non-collocated ports; asserts Z12 == Z21 within 1e-12 relative.</li>
+                    <li><strong>cavity: |Z| peaks near first TM10 resonance</strong> <code>[cavity]</code> &mdash; evaluates a 100x100mm cavity at 0.5/1.0/2.0 * f10; asserts the magnitude at f10 exceeds both off-resonance points.</li>
+                    <li><strong>cavity: sweep returns vector of expected length</strong> <code>[cavity]</code> &mdash; runs a 20-point sweep; asserts the result has 20 entries, each finite and non-negative.</li>
+                    <li><strong>cavity: empty decap list equals plain self-impedance</strong> <code>[cavity][decap]</code> &mdash; compares <code>cavity_impedance_with_decaps</code> with empty vs <code>cavity_impedance</code>; asserts relative difference &lt; 1e-12.</li>
+                    <li><strong>cavity: nearby decap pulls Z toward the parallel combination</strong> <code>[cavity][decap]</code> &mdash; adds a 100 nF cap 5mm from the observation port; asserts |Z_with_decap - Z_parallel| &lt; |Z_with_decap - Z_plain|.</li>
+                    <li><strong>cavity: adding a decap reduces |Z| in the cap-dominant band</strong> <code>[cavity][decap]</code> &mdash; adds a 1 uF cap with low ESR/ESL at 10 MHz; asserts |Z_with| &lt; |Z_plain|.</li>
+                    <li><strong>cavity: decap sweep magnitudes finite + non-negative</strong> <code>[cavity][decap]</code> &mdash; sweeps two decaps over 25 frequencies; asserts every magnitude is finite and &gt;= 0.</li>
+                    <li><strong>cavity: peak frequency matches analytical TM10 within 5%</strong> <code>[cavity][validation]</code> &mdash; sweeps tightly around f10 with 401 points on a 100x60mm cavity; asserts the peak location is within 5% of c/(2a*sqrt(eps_r)).</li>
+                    <li><strong>cavity: TM01 peak resolves on a non-square plane</strong> <code>[cavity][validation]</code> &mdash; sweeps around f01 on a 100x50mm cavity; asserts the peak is within 5% of c/(2b*sqrt(eps_r)).</li>
+                    <li><strong>cavity: peak frequency scales 1/sqrt(eps_r)</strong> <code>[cavity][validation]</code> &mdash; compares peaks at eps_r=2.2 vs 4.3; asserts the ratio matches sqrt(4.3)/sqrt(2.2) within 5%.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-cavity-mount-l-test-cpp">
+                <h3>pdnkit/tests/cavity_mount_l_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>cavity-mount-L: zero mounting L matches default behavior</strong> <code>[cavity-mount-l][validation]</code> &mdash; evaluates with mounting_via_loop_l_h=0 and the baseline; asserts the two Z values match within numerical tolerance.</li>
+                    <li><strong>cavity-mount-L: nonzero mounting L lowers cap SRF</strong> <code>[cavity-mount-l][validation]</code> &mdash; evaluates a 1 uF cap with ESL 0.5 nH at its bare SRF, comparing bare vs +1 nH mounting; asserts the mounted |Z| exceeds the bare |Z|.</li>
+                    <li><strong>cavity-mount-L: SRF scales with 1/sqrt(L_eff)</strong> <code>[cavity-mount-l]</code> &mdash; analytic check: doubles L; asserts f2/f1 == 1/sqrt(2) within 1e-9.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-decap-optimizer-test-cpp">
+                <h3>pdnkit/tests/decap_optimizer_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>optimizer: easy target requires no caps</strong> <code>[optimizer]</code> &mdash; sets target_z=1e6 ohms; asserts <code>target_met</code> is true and the decaps list is empty.</li>
+                    <li><strong>optimizer: meaningful target picks some decaps and reduces |Z|</strong> <code>[optimizer]</code> &mdash; sets target_z=50 mohm on an 80x60mm plate; asserts the decap list is non-empty, final_max_z &lt; 50 and chosen caps cluster within 10mm of the configured position.</li>
+                    <li><strong>optimizer: max_caps cap is respected</strong> <code>[optimizer]</code> &mdash; sets target_z=1e-6 and max_caps=4; asserts the result has &lt;=4 caps and <code>target_met</code> is false.</li>
+                    <li><strong>optimizer: invalid config returns no caps</strong> <code>[optimizer]</code> &mdash; sets target_z=-1; asserts the decaps list is empty and <code>target_met</code> is false.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-dielectric-test-cpp">
+                <h3>pdnkit/tests/dielectric_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>dj-sarkar: well below f1 -&gt; eps_inf + delta_eps</strong> <code>[dielectric][validation]</code> &mdash; evaluates at 1 Hz (3 decades below f1=1 kHz); asserts eps_r&#x27; ~ eps_inf+delta_eps and eps_r&#x27;&#x27; &lt; 0.01.</li>
+                    <li><strong>dj-sarkar: well above f2 -&gt; eps_inf</strong> <code>[dielectric][validation]</code> &mdash; evaluates at 1 THz; asserts eps_r&#x27; ~ eps_inf within 0.05.</li>
+                    <li><strong>dj-sarkar: FR-4 default fit at f2 lands near eps_inf</strong> <code>[dielectric][validation]</code> &mdash; evaluates at 1 GHz; asserts eps_r&#x27; in (3.8, 4.0) and tan_delta in (0, 0.03).</li>
+                    <li><strong>dj-sarkar: loss peaks mid-band</strong> <code>[dielectric]</code> &mdash; evaluates at sqrt(f1*f2) and at decade-offset edges; asserts mid-band imag &gt; both edge imags.</li>
+                    <li><strong>dj-sarkar: eps_r real part decreases with frequency</strong> <code>[dielectric]</code> &mdash; evaluates at 1 MHz, 1 GHz, 10 GHz; asserts strictly decreasing.</li>
+                    <li><strong>dj-sarkar: invalid inputs return eps_inf</strong> <code>[dielectric]</code> &mdash; queries with f=0 and a bad f1=0 model; asserts both fall back to eps_inf.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-e2e-test-cpp">
+                <h3>pdnkit/tests/e2e_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>e2e: tiny_pdn fixture parses with expected counts</strong> <code>[e2e]</code> &mdash; parses the bundled tiny_pdn.kicad_pcb; asserts 11 layers, total_thickness 1.6mm, 3 nets, 4 pads, 1 segment, 1 via and 2 zones.</li>
+                    <li><strong>e2e: through-hole pads on *.Cu expand to all copper layers</strong> <code>[e2e]</code> &mdash; searches for pads that cover both F.Cu and B.Cu; asserts exactly 2 such pads (the PinHeader through-holes).</li>
+                    <li><strong>e2e: IR drop on +3V3 F.Cu produces sane voltage map</strong> <code>[e2e]</code> &mdash; meshes the +3V3 net on F.Cu at 0.5mm cells and solves with 1 A; asserts &gt;100 nodes, non-empty resistors, source and sink nodes set, every voltage finite in [0, 1) and a positive spread.</li>
+                    <li><strong>e2e: board outline parsed from Edge.Cuts</strong> <code>[e2e]</code> &mdash; parses the outline; asserts 76 outline lines and the first segment runs from (0, 15) to (20, 15).</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-ir-mesher-test-cpp">
+                <h3>pdnkit/tests/ir_mesher_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>mesher: no matching geometry returns empty mesh</strong> <code>[irmesh]</code> &mdash; runs IrMesher on a board with no zones; asserts nodes and resistors are empty.</li>
+                    <li><strong>mesher: 10mm square zone with 1mm cells -&gt; ~100 nodes</strong> <code>[irmesh]</code> &mdash; meshes a 10x10mm zone at 1mm cells; asserts 100 nodes and 180 interior edge resistors.</li>
+                    <li><strong>mesher: invalid config returns empty mesh</strong> <code>[irmesh]</code> &mdash; sets cell_size=0; asserts the mesher returns no nodes.</li>
+                    <li><strong>mesher: per-resistor conductance = t/rho for square cells</strong> <code>[irmesh]</code> &mdash; meshes with t=35um and rho=1.68e-8; asserts the first resistor conductance ~ 2083 S.</li>
+                    <li><strong>mesher: mesh respects zone hole (no nodes inside)</strong> <code>[irmesh]</code> &mdash; meshes a 10x10mm zone with a 4x4mm hole; asserts 84 nodes (100 - 16).</li>
+                    <li><strong>mesher: leftmost and rightmost pads become source and sink</strong> <code>[irmesh]</code> &mdash; adds two pads at the ends of a zone; asserts one source and one sink with source.x &lt; sink.x.</li>
+                    <li><strong>mesher: pad on wrong net or layer is ignored</strong> <code>[irmesh]</code> &mdash; adds pads on a different net and a different layer; asserts source and sink lists are empty.</li>
+                    <li><strong>mesher: bbox matches the source polygon bbox</strong> <code>[irmesh]</code> &mdash; meshes a 10x10mm zone; asserts bbox is (0,0)-(0.010, 0.010).</li>
+                    <li><strong>mesher: explicit source/sink pad names override auto-pick</strong> <code>[irmesh]</code> &mdash; adds three pads A/B/C and configures source=B, sink=C; asserts the picked source is near x=0.005 and sink near x=0.009.</li>
+                    <li><strong>mesher: missing-name explicit list falls back to auto-pick</strong> <code>[irmesh]</code> &mdash; supplies source_pad_names with no matches; asserts source and sink lists are still populated via auto-pick.</li>
+                    <li><strong>mesher: explicit pad_currents populate node_currents</strong> <code>[irmesh]</code> &mdash; supplies pad currents A=2, B=-0.5, C=-1.5; asserts 3 entries are present and they sum to 0.</li>
+                    <li><strong>mesher: multi-layer meshes both layers and wires via resistors</strong> <code>[irmesh]</code> &mdash; meshes F.Cu + B.Cu zones connected by one through-via; asserts 200 nodes, 361 resistors (180+180+1) and 100 nodes per layer.</li>
+                    <li><strong>mesher: extra_layer_ordinals duplicate of primary is harmless</strong> <code>[irmesh]</code> &mdash; supplies extra_layer_ordinals=[0,0,0]; asserts the result has 100 nodes (not 400).</li>
+                    <li><strong>mesher: prune drops disconnected component without source/sink</strong> <code>[irmesh][connectivity]</code> &mdash; adds two separated zones with pads only on the left one; asserts only the left 100 nodes remain.</li>
+                    <li><strong>mesher: prune kills everything if source + sink are on different islands</strong> <code>[irmesh][connectivity]</code> &mdash; adds two separated zones with source on one and sink on the other; asserts nodes is empty.</li>
+                    <li><strong>mesher: auto_select_layer picks the layer with the most copper</strong> <code>[irmesh][autopick]</code> &mdash; requests F.Cu but only B.Cu has copper, with auto_select_layer=true; asserts primary_layer_used==31 and every node is on B.Cu.</li>
+                    <li><strong>mesher: auto_select_layer=false enforces the requested layer</strong> <code>[irmesh][autopick]</code> &mdash; same setup with auto_select_layer=false; asserts the result is empty.</li>
+                    <li><strong>mesher: auto_select_layer is a no-op when primary layer already has copper</strong> <code>[irmesh][autopick]</code> &mdash; F.Cu has copper and auto_select_layer=true; asserts primary_layer_used==0.</li>
+                    <li><strong>track-mesher: 2-segment trace builds 3 nodes, 2 resistors</strong> <code>[irmesh][track]</code> &mdash; adds two 5mm segments end-to-end with two pads at the endpoints; asserts 3 nodes, 2 resistors and non-empty source/sink lists.</li>
+                    <li><strong>track-mesher: T-junction merges 3 segments at one node</strong> <code>[irmesh][track]</code> &mdash; adds three segments meeting at the origin; asserts 4 nodes and 3 resistors.</li>
+                    <li><strong>track-mesher: pad far from any track endpoint is ignored</strong> <code>[irmesh][track]</code> &mdash; adds a single segment plus two pads 50mm away; asserts source and sink lists are empty.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-ir-result-mesh-test-cpp">
+                <h3>pdnkit/tests/ir_result_mesh_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ir-result-mesh: empty solution -&gt; empty mesh</strong> <code>[result-mesh]</code> &mdash; builds the result mesh from an empty Solution; asserts vertices is empty.</li>
+                    <li><strong>ir-result-mesh: per-node quad with normalized voltage</strong> <code>[result-mesh]</code> &mdash; builds from a 2-node mesh with voltages 2mV and 0V; asserts 8 verts, 12 indices and the t coords are 1.0 for node 0 and 0.0 for node 1.</li>
+                    <li><strong>ir-result-mesh: zero-span solution clamps t to 0</strong> <code>[result-mesh]</code> &mdash; builds from a 1-node mesh with min==max; asserts the t coord is 0.</li>
+                    <li><strong>ir-result-mesh: hotspot points at the worst node (voltage)</strong> <code>[result-mesh][hotspot]</code> &mdash; builds with voltages [1.0, 0.4, 0.05]; asserts hotspot.valid, x==0.002, value==0.05 and is_current is false.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-ir-solver-test-cpp">
+                <h3>pdnkit/tests/ir_solver_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>solver: empty mesh returns error</strong> <code>[solver]</code> &mdash; solves an empty IrMesh; asserts ok is false and error == &quot;empty mesh&quot;.</li>
+                    <li><strong>solver: missing sources fails cleanly</strong> <code>[solver]</code> &mdash; builds a one-node mesh with no sources; asserts the solve returns ok=false.</li>
+                    <li><strong>solver: missing sinks fails cleanly</strong> <code>[solver]</code> &mdash; builds a one-node mesh with a source but no sink; asserts ok=false.</li>
+                    <li><strong>solver: 2-node, 1A through G=1000S gives 1mV drop</strong> <code>[solver]</code> &mdash; 2-node mesh with G=1000 and 1 A source; asserts V_src == 1 mV and V_sink == 0.</li>
+                    <li><strong>solver: 3-node series, middle is halfway</strong> <code>[solver]</code> &mdash; 3-node series with G=1000 and 1 A; asserts V_src == 2 mV, V_mid == 1 mV, V_sink == 0.</li>
+                    <li><strong>solver: total_current scales linearly</strong> <code>[solver]</code> &mdash; compares 1 A and 5 A solves; asserts the V_src ratio is 5.</li>
+                    <li><strong>solver: parallel paths cut effective resistance</strong> <code>[solver]</code> &mdash; 4-node square with two parallel paths; asserts V_src == 1 mV (R_eq == 1 mohm).</li>
+                    <li><strong>solver: end-to-end with mesher on a 10mm square zone</strong> <code>[solver][e2e]</code> &mdash; meshes a 10x10mm zone at 1mm cells and solves with 1 A; asserts 100 nodes, exactly one source/sink, max_v &lt; 5 mV and min_v == 0.</li>
+                    <li><strong>solver: explicit node_currents (multi-source/sink balance)</strong> <code>[solver]</code> &mdash; 5-node line with two 0.5 A sources and one -1 A sink; asserts v[2] == 0, v[0]==v[4] and v[0] &gt; 0.</li>
+                    <li><strong>solver: explicit currents must sum to zero</strong> <code>[solver]</code> &mdash; supplies +1 at node 0 and -0.5 at node 2 (sum != 0); asserts the solve fails.</li>
+                    <li><strong>solver: explicit currents need at least one sink</strong> <code>[solver]</code> &mdash; supplies two positive currents only; asserts the solve fails.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-mor-test-cpp">
+                <h3>pdnkit/tests/mor_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>mor: empty inputs return empty</strong> <code>[mor]</code> &mdash; runs <code>reduce_to_ports</code> on an empty mesh; asserts port_node_ids is empty.</li>
+                    <li><strong>mor: chain mesh reduces correctly</strong> <code>[mor][validation]</code> &mdash; reduces a 3-node 10+10 ohm chain to ports {0, 2}; asserts the 2x2 G has +0.05 on diagonal and -0.05 off-diagonal.</li>
+                    <li><strong>mor: parallel paths combine correctly</strong> <code>[mor][validation]</code> &mdash; reduces a 10 || 20 ohm network; asserts the off-diagonal entry is -0.15.</li>
+                    <li><strong>mor: keeping all nodes is identity</strong> <code>[mor]</code> &mdash; reduces with all nodes kept; asserts the 3x3 G has the original diagonal values (0.1, 0.2, 0.1).</li>
+                    <li><strong>mor: SPICE export of reduced network</strong> <code>[mor]</code> &mdash; exports the chain-3 reduction; asserts the output contains &quot;R0 NP0 NP1 2.000000e+01&quot; and &quot;.end&quot;.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-ohms-law-test-cpp">
+                <h3>pdnkit/tests/ohms_law_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ohms-law: 100mm trace solves close to rho*L/(W*t)</strong> <code>[ohms][validation]</code> &mdash; parses trace_100mm.kicad_pcb, meshes at 0.5mm cells and solves 1 A; asserts V_drop lies in [0.5x, 1.5x] of the analytic 4.32 mV.</li>
+                    <li><strong>ohms-law: drop scales linearly with current</strong> <code>[ohms][validation]</code> &mdash; solves at 1 A and 3 A; asserts the ratio of drops is exactly 3.</li>
+                    <li><strong>ohms-law: result tightens as cell size shrinks</strong> <code>[ohms][validation]</code> &mdash; solves at 1.0mm vs 0.25mm cells; asserts both are within +/-50% of R_ideal, fine error &lt;= coarse error and fine error &lt; 5%.</li>
+                    <li><strong>ohms-law: source/sink_pad_indices match name-based picking</strong> <code>[ohms][validation][probe-r]</code> &mdash; compares auto-pick vs explicit pad-index pick on the same fixture; asserts the two V drops match within 1e-6 relative and swapping source/sink leaves |V drop| unchanged.</li>
+                    <li><strong>ohms-law: current-density heat-map matches I/W in mid-trace</strong> <code>[ohms][validation][current-density]</code> &mdash; builds the current-density render mesh and computes |J_x| at mid-trace nodes via central diff; asserts the mean |K| matches I/W within 10%.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-power-drc-test-cpp">
+                <h3>pdnkit/tests/power_drc_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>ipc2221: 1A external 1oz 10C rise -&gt; ~0.30 mm</strong> <code>[drc][validation]</code> &mdash; computes <code>ipc2221_min_area(1, 10, true)</code>; asserts the required width is in (0.25, 0.40) mm and the inverse <code>ipc2221_max_current</code> recovers 1 A.</li>
+                    <li><strong>ipc2221: internal needs more copper than external</strong> <code>[drc]</code> &mdash; compares internal vs external at 2 A 10 C; asserts area_int &gt; area_ext and the ratio ~ 2.6.</li>
+                    <li><strong>ipc2221: 30C rise needs less width than 10C rise</strong> <code>[drc]</code> &mdash; compares 10 C vs 30 C at 3 A; asserts area_30 &lt; area_10 with ratio ~ 0.51.</li>
+                    <li><strong>drc: flags undersized trace on the target net</strong> <code>[drc]</code> &mdash; adds one 0.5mm and one 2.0mm segment on +3V3, runs check_ipc2152 at 3 A; asserts segments_checked==2 and exactly one violation on the 0.5mm segment.</li>
+                    <li><strong>drc: distinguishes internal from external layers</strong> <code>[drc]</code> &mdash; adds a 0.3mm internal segment on VCC at 1 A; asserts one violation flagged as <code>external=false</code>.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-roughness-test-cpp">
+                <h3>pdnkit/tests/roughness_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>rough: skin depth in Cu at 1 GHz is ~2.06 um</strong> <code>[roughness][validation]</code> &mdash; evaluates <code>skin_depth_copper</code> at 1 GHz; asserts the result is between 2.0 and 2.15 um.</li>
+                    <li><strong>rough: low-freq limit gives multiplier ~ 1</strong> <code>[roughness][validation]</code> &mdash; evaluates HJ at 1 kHz with 1 um Rq; asserts K == 1 within 1e-6.</li>
+                    <li><strong>rough: high-freq limit gives multiplier ~ 2</strong> <code>[roughness][validation]</code> &mdash; evaluates HJ at 1 THz with 5 um Rq; asserts K in (1.95, 2.0].</li>
+                    <li><strong>rough: 1 um Rq at 10 GHz lands in published HJ band</strong> <code>[roughness][validation]</code> &mdash; evaluates 1 um Rq at 10 GHz; asserts K in (1.65, 1.95).</li>
+                    <li><strong>rough: rougher copper -&gt; higher multiplier</strong> <code>[roughness]</code> &mdash; compares 0.4 um vs 2.0 um Rq at 5 GHz; asserts the rougher value is higher.</li>
+                    <li><strong>rough: zero inputs return 1</strong> <code>[roughness]</code> &mdash; evaluates HJ with R_q=0 and f=0; asserts both return 1.0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-sensitivity-test-cpp">
+                <h3>pdnkit/tests/sensitivity_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>sensitivity: empty inputs return empty</strong> <code>[sensitivity]</code> &mdash; runs sensitivity_sweep with no caps or freqs; asserts the result is empty.</li>
+                    <li><strong>sensitivity: ranks small bypass ahead of bulk at high f</strong> <code>[sensitivity][validation]</code> &mdash; sweeps two caps (10 uF bulk and 100 nF bypass) across 100 kHz to 5 GHz; asserts the bulk peak_freq &lt; bypass peak_freq and the bypass peak is &gt; 10 MHz.</li>
+                    <li><strong>sensitivity: symmetric caps have equal sensitivity</strong> <code>[sensitivity]</code> &mdash; adds two identical caps at the same position; asserts both have equal max_relative_change.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-smoke-test-cpp">
+                <h3>pdnkit/tests/smoke_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>smoke: arithmetic works</strong> <code>[smoke]</code> &mdash; asserts 1 + 1 == 2.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-spice-export-test-cpp">
+                <h3>pdnkit/tests/spice_export_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>spice: empty mesh -&gt; minimal netlist</strong> <code>[spice]</code> &mdash; exports an empty IrMesh; asserts the output contains &quot;.end&quot; and has zero R/I/Vsink lines.</li>
+                    <li><strong>spice: chain mesh has expected R / I / V lines</strong> <code>[spice]</code> &mdash; exports a 3-node chain with default 1 A; asserts 2 R lines at &quot;1.000000e+01&quot;, one &quot;I0 0 N0 DC 1.000000e+00&quot; and &quot;Vsink0 N2 0 DC 0&quot;, plus &quot;.op&quot; and &quot;.end&quot;.</li>
+                    <li><strong>spice: explicit node_currents override source list</strong> <code>[spice]</code> &mdash; supplies node_currents [{0, 0.5}, {1, 0.25}]; asserts 2 I lines with 0.5 and 0.25 and no 1.0 A fallback.</li>
+                    <li><strong>spice: multiple sources split the total current</strong> <code>[spice]</code> &mdash; adds two sources and total_current=2; asserts each I line carries 1 A.</li>
+                    <li><strong>spice: title and position comments configurable</strong> <code>[spice]</code> &mdash; sets a custom title and enables position comments; asserts the title appears as a &quot;* &quot; comment and at least one &quot;; (&quot; position comment is emitted.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-stackup-writer-test-cpp">
+                <h3>pdnkit/tests/stackup_writer_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>stackup-save: same src/dst path is rejected</strong> <code>[stackup-save]</code> &mdash; calls <code>save_modified_stackup(p, p, b)</code>; asserts ok is false.</li>
+                    <li><strong>stackup-save: updates thickness of matching layers</strong> <code>[stackup-save][validation]</code> &mdash; saves with 70um F.Cu/B.Cu; asserts ok, layers_updated==2 and the destination contains &quot;0.07&quot; but not &quot;0.035&quot;, with the 0.51mm dielectric untouched.</li>
+                    <li><strong>stackup-save: missing stackup block fails cleanly</strong> <code>[stackup-save]</code> &mdash; saves with a kicad_pcb missing the stackup section; asserts ok==false and the error mentions &quot;stackup&quot;.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-target-z-test-cpp">
+                <h3>pdnkit/tests/target_z_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>target-z: 3.3V 5pct 1A -&gt; 165 mOhm</strong> <code>[target-z][validation]</code> &mdash; evaluates Smith&#x27;s canonical case; asserts the result is 0.165 within 1e-9.</li>
+                    <li><strong>target-z: tighter step -&gt; tighter target</strong> <code>[target-z]</code> &mdash; compares 0.5 A vs 5.0 A step at 3% ripple; asserts the ratio is 1/10.</li>
+                    <li><strong>target-z: 0.9V core rail at high current</strong> <code>[target-z]</code> &mdash; evaluates 0.9V/3%/50A; asserts the result is 0.00054 within 1e-9.</li>
+                    <li><strong>target-z: zero current step returns 0</strong> <code>[target-z]</code> &mdash; evaluates with current_step=0; asserts the result is 0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-thermal-test-cpp">
+                <h3>pdnkit/tests/thermal_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>thermal: trace_100mm at 5A heats ~12 C with R_theta=100</strong> <code>[thermal][validation]</code> &mdash; runs <code>solve_ir_with_thermal</code> at 5 A with R_theta=100; asserts converged, iterations &gt;= 2, dT in (10, 18) C and rho_final in (1.03, 1.08) * rho_20.</li>
+                    <li><strong>thermal: bigger heatsink (lower R_theta) means less rise</strong> <code>[thermal]</code> &mdash; compares R_theta=200 vs 20; asserts the hot run has larger dT and rho.</li>
+                    <li><strong>thermal: no current means no heating</strong> <code>[thermal]</code> &mdash; solves with 0 A; asserts dT ~ 0 and rho equals the ambient-temperature corrected value.</li>
+                    <li><strong>thermal: convergence in a handful of iterations</strong> <code>[thermal]</code> &mdash; solves at 5 A; asserts iterations &lt;= 6.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-touchstone-test-cpp">
+                <h3>pdnkit/tests/touchstone_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>touchstone: empty samples -&gt; header only</strong> <code>[touchstone]</code> &mdash; writes an empty .s1p; asserts the file contains &quot;# Hz Z RI R 50&quot;.</li>
+                    <li><strong>touchstone: round-trip a few samples</strong> <code>[touchstone]</code> &mdash; writes and re-reads 4 samples; asserts each frequency and real/imag round-trip exactly.</li>
+                    <li><strong>touchstone: comment lines emit with ! prefix</strong> <code>[touchstone]</code> &mdash; writes with a &quot;line one\nline two&quot; comment; asserts both lines appear as &quot;! line one&quot; / &quot;! line two&quot;.</li>
+                    <li><strong>touchstone: option line is well-formed</strong> <code>[touchstone]</code> &mdash; writes one sample; asserts the option line reads &quot;# Hz Z RI R 50&quot;.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-transient-test-cpp">
+                <h3>pdnkit/tests/transient_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>transient: empty mesh returns error</strong> <code>[transient]</code> &mdash; calls <code>solve_step_transient</code> on an empty mesh; asserts ok is false.</li>
+                    <li><strong>transient: missing sink returns error</strong> <code>[transient]</code> &mdash; builds a 1-node mesh with a source but no sink; asserts ok is false.</li>
+                    <li><strong>transient: two-node RC matches analytical step response</strong> <code>[transient]</code> &mdash; runs Backward Euler on a 2-node RC with dt=tau/100; asserts the solver tracks V(t) = I*R*(1 - exp(-t/RC)) to &lt;5% at four sample points.</li>
+                    <li><strong>transient: asymptotic value matches static IR drop</strong> <code>[transient]</code> &mdash; runs 2000 steps; asserts the final source voltage equals I*R within 1%.</li>
+                    <li><strong>transient: per-node C vector overrides scalar</strong> <code>[transient]</code> &mdash; supplies per_node_capacitance=1e-15 (ignored) and per_node_capacitances=[1uF, 1uF]; asserts the final voltage matches the 1uF case within 1%.</li>
+                    <li><strong>transient: per-node vector wrong length is an error</strong> <code>[transient]</code> &mdash; supplies a one-element vector for a 2-node mesh; asserts ok is false.</li>
+                    <li><strong>transient: distributed C builder gives plane-pair value per cell</strong> <code>[transient]</code> &mdash; evaluates <code>build_distributed_capacitance</code> for 0.5mm cells, FR-4, 1.6mm; asserts each node holds ~5.95e-15 F within 5%.</li>
+                    <li><strong>transient: decap C lumps onto nearest node</strong> <code>[transient]</code> &mdash; adds a 1 uF decap near node 1; asserts c[1] &gt; 0.5 uF and c[0] &lt; 1 nF.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-via-inductance-test-cpp">
+                <h3>pdnkit/tests/via_inductance_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>via-L: 0.3mm/1.6mm self-inductance is ~660 pH</strong> <code>[via-l][validation]</code> &mdash; evaluates <code>via_self_inductance(0.15mm, 1.6mm)</code>; asserts L in (600, 750) pH.</li>
+                    <li><strong>via-L: doubling length more than doubles inductance</strong> <code>[via-l]</code> &mdash; compares 1.6mm vs 3.2mm; asserts L2/L1 in (2.0, 3.0).</li>
+                    <li><strong>via-L: thinner via has higher self-L</strong> <code>[via-l]</code> &mdash; compares 0.15mm vs 0.075mm radius; asserts the thinner L is higher by ~222 pH (mu0*h*ln(2)/(2*pi)).</li>
+                    <li><strong>via-L: mutual at 0.5mm spacing is ~370 pH</strong> <code>[via-l][validation]</code> &mdash; evaluates <code>via_mutual_inductance</code> for 1.6mm length / 0.5mm spacing; asserts M in (340, 400) pH.</li>
+                    <li><strong>via-L: pair loop inductance is self - mutual</strong> <code>[via-l][validation]</code> &mdash; evaluates <code>via_pair_loop_inductance</code>; asserts it equals L_self - M and lies in (250, 350) pH.</li>
+                    <li><strong>via-L: zero radius or length returns 0</strong> <code>[via-l]</code> &mdash; evaluates with r=0, h=0 and d=0; asserts each returns 0.</li>
+                    <li><strong>via-L: mutual goes to zero as spacing grows</strong> <code>[via-l]</code> &mdash; compares 0.5mm vs 10mm spacing; asserts M(10mm) &lt; M(0.5mm) and &lt; 100 pH.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="pdnkit-tests-vrm-test-cpp">
+                <h3>pdnkit/tests/vrm_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>vrm: at DC Z = R_droop</strong> <code>[vrm][validation]</code> &mdash; evaluates <code>vrm_impedance</code> at omega=0; asserts real==r_droop and imag==0.</li>
+                    <li><strong>vrm: at R/L corner |Z| = R*sqrt(2)</strong> <code>[vrm][validation]</code> &mdash; evaluates at omega=R/L; asserts |Z| matches R*sqrt(2) within 1e-9.</li>
+                    <li><strong>vrm: well above corner Z is inductive</strong> <code>[vrm]</code> &mdash; evaluates at 10 MHz; asserts imag &gt; 100*real, imag == omega*L and phase &gt; 89 degrees.</li>
+                    <li><strong>vrm: custom parameters scale as expected</strong> <code>[vrm]</code> &mdash; evaluates with droop=0.5mohm, L=4.7uH at DC and 1 MHz; asserts the DC real matches and the 1 MHz imag matches omega*L.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="emikit-electromagnetic-interference" class="newsblock">
+            <h2>emikit (electromagnetic interference)</h2>
+            <div class="file-block" id="emikit-tests-analysis-test-cpp">
+                <h3>emikit/tests/analysis_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>analysis: empty board returns NoData, not PASS</strong> <code>[emi]</code> &mdash; runs <code>analyze_board</code> on an empty Board; asserts nets is empty and verdict.status == NoData.</li>
+                    <li><strong>analysis: filter that matches nothing returns NoData</strong> <code>[emi]</code> &mdash; supplies net_filter={&quot;DOES_NOT_EXIST&quot;}; asserts nets is empty and status is NoData.</li>
+                    <li><strong>analysis: one trace produces one NetEmission record</strong> <code>[emi]</code> &mdash; analyses one 50mm CLK trace; asserts 1 net record with correct name, total_length_m, loop_area_m2 &gt; 0 and e_dbuv length matching the default grid.</li>
+                    <li><strong>analysis: longer trace radiates more</strong> <code>[emi]</code> &mdash; compares 20mm vs 200mm traces; asserts the larger worst_case_dbuv.</li>
+                    <li><strong>analysis: net filter restricts evaluated nets</strong> <code>[emi]</code> &mdash; supplies net_filter={&quot;CLK&quot;} on a board with CLK and DATA; asserts only the CLK record is returned.</li>
+                    <li><strong>analysis: tight drive + giant loop fails the mask</strong> <code>[emi]</code> &mdash; runs 1m trace, 5mm loop, 1A/1ns/100MHz drive; asserts verdict==Fail and worst_margin_db &lt; 0.</li>
+                    <li><strong>analysis: default freq grid covers 30 MHz to 1 GHz</strong> <code>[emi]</code> &mdash; queries <code>default_cispr_freq_grid(50)</code>; asserts size==50, first==30 MHz and last==1 GHz.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="emikit-tests-cable-cm-test-cpp">
+                <h3>emikit/tests/cable_cm_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>cable: zero length -&gt; zero field</strong> <code>[cable]</code> &mdash; evaluates with length=0; asserts the result is 0.</li>
+                    <li><strong>cable: zero current -&gt; zero field</strong> <code>[cable]</code> &mdash; evaluates with cm_current=0; asserts the result is 0.</li>
+                    <li><strong>cable: 20uA, 30 cm, 100 MHz, 10 m matches Paul Eq 11.5</strong> <code>[cable][calibration]</code> &mdash; evaluates the canonical case; asserts |E| == 7.54e-5 V/m within 0.5% and 37.55 dBuV/m within 0.05.</li>
+                    <li><strong>cable: short-dipole regime is linear in f, I, and L</strong> <code>[cable]</code> &mdash; doubles f, I, L and r independently; asserts each scales by the analytic factor (2x or 0.5x).</li>
+                    <li><strong>cable: TI ADS8686S working point sanity check</strong> <code>[cable][calibration]</code> &mdash; evaluates 30 cm / 30 uA / 480 MHz / 10 m; asserts dBuV equals 54.71 within 0.1.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="emikit-tests-calibration-test-cpp">
+                <h3>emikit/tests/calibration_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>calibration: 1mA, 1 cm^2, 100 MHz, 3 m matches Ott Eq 11-2</strong> <code>[calibration]</code> &mdash; evaluates the reference loop; asserts 12.85 dBuV/m within 0.05.</li>
+                    <li><strong>calibration: f=300 MHz scales by 9x vs 100 MHz reference</strong> <code>[calibration]</code> &mdash; evaluates the same loop at 300 MHz; asserts 31.93 dBuV/m (12.85 + 19.08) within 0.05.</li>
+                    <li><strong>calibration: r=10 m drops by 10/3x vs 3 m reference</strong> <code>[calibration]</code> &mdash; evaluates at r=10m; asserts 2.39 dBuV/m within 0.05.</li>
+                    <li><strong>calibration: I=10 mA gives +20 dB over reference</strong> <code>[calibration]</code> &mdash; evaluates with 10x current; asserts 32.85 dBuV/m within 0.05.</li>
+                    <li><strong>calibration: V/m result matches hand calc to 3 sig figs</strong> <code>[calibration]</code> &mdash; evaluates the reference V/m; asserts 4.390e-6 within 0.5%.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="emikit-tests-loop-test-cpp">
+                <h3>emikit/tests/loop_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>loop: zero area -&gt; zero E</strong> <code>[loop]</code> &mdash; evaluates with A=0; asserts E==0.</li>
+                    <li><strong>loop: zero current -&gt; zero E</strong> <code>[loop]</code> &mdash; evaluates with I=0; asserts E==0.</li>
+                    <li><strong>loop: E scales as f^2</strong> <code>[loop]</code> &mdash; doubles freq; asserts E ratio is 4.</li>
+                    <li><strong>loop: E scales linearly in area and current</strong> <code>[loop]</code> &mdash; doubles A and I independently; asserts each gives 2x base.</li>
+                    <li><strong>loop: E falls as 1/r</strong> <code>[loop]</code> &mdash; evaluates at 3 m vs 10 m; asserts the ratio is 10/3.</li>
+                    <li><strong>loop: dBuV conversion is consistent with V/m result</strong> <code>[loop]</code> &mdash; evaluates both forms; asserts dBuV == 20*log10(V/m * 1e6).</li>
+                    <li><strong>loop: sweep returns one value per freq</strong> <code>[loop]</code> &mdash; runs a 4-frequency sweep; asserts result size==4.</li>
+                    <li><strong>loop: sweep size mismatch throws</strong> <code>[loop]</code> &mdash; supplies freqs of size 2 and loop heights of size 1; asserts it throws.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="emikit-tests-masks-test-cpp">
+                <h3>emikit/tests/masks_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>masks: CISPR 32 Class B step at 230 MHz</strong> <code>[masks]</code> &mdash; evaluates limit at 100 MHz and 500 MHz; asserts 40 and 47 dBuV/m.</li>
+                    <li><strong>masks: CISPR 32 Class A is looser than Class B in upper band</strong> <code>[masks]</code> &mdash; evaluates both at 2 GHz; asserts Class A &gt; Class B.</li>
+                    <li><strong>masks: FCC Part 15 Class B has its own breakpoints</strong> <code>[masks]</code> &mdash; evaluates 50/100/500/980 MHz; asserts 40/43.5/46/54 dBuV/m.</li>
+                    <li><strong>masks: limit_at clamps at endpoints</strong> <code>[masks]</code> &mdash; queries below 30 MHz and above 6 GHz; asserts the clamps return the first and last point values.</li>
+                    <li><strong>masks: margin_db sign convention</strong> <code>[masks]</code> &mdash; evaluates margin at 30 and 50 dBuV against a 40 dBuV limit; asserts +10 and -10.</li>
+                    <li><strong>masks: registry lookup</strong> <code>[masks]</code> &mdash; looks up CISPR 32 Class B by name; asserts the pointer matches, an unknown name returns nullptr and <code>all_masks().size() == 6</code>.</li>
+                    <li><strong>masks: every mask carries a usable shape</strong> <code>[masks]</code> &mdash; iterates all_masks; asserts non-empty name/family/source and test_distance &gt; 0 and points non-empty.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="emikit-tests-spectrum-test-cpp">
+                <h3>emikit/tests/spectrum_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>spectrum: fundamental of a 100 MHz / 50% / 1 ns rise is well-behaved</strong> <code>[spectrum]</code> &mdash; evaluates harmonic 1 of a 20 mA trapezoid; asserts magnitude in (10 mA, 15 mA).</li>
+                    <li><strong>spectrum: even harmonics of a 50% duty cycle vanish</strong> <code>[spectrum]</code> &mdash; evaluates harmonics 2 and 4 with duty=0.5; asserts both &lt; 1e-12.</li>
+                    <li><strong>spectrum: corner frequencies match the closed form</strong> <code>[spectrum]</code> &mdash; evaluates envelope_corners for 10ns period / 1ns rise; asserts f_tau ~ 63.66 MHz and f_tr ~ 318.3 MHz.</li>
+                    <li><strong>spectrum: sweep returns one value per freq</strong> <code>[spectrum]</code> &mdash; runs a 4-frequency sweep; asserts result size==4.</li>
+                    <li><strong>spectrum: zero period -&gt; zero output</strong> <code>[spectrum]</code> &mdash; evaluates with period=0; asserts harmonic 1 is 0 and every sweep entry is 0.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="mpkit-multiphysics" class="newsblock">
+            <h2>mpkit (multiphysics)</h2>
+            <div class="file-block" id="mpkit-tests-component-coupling-test-cpp">
+                <h3>mpkit/tests/component_coupling_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>apply_default_metadata fills height + mass from package family</strong> <code>[component-couple]</code> &mdash; adds a SOIC-8 component with zero metadata; asserts <code>apply_default_metadata</code> returns 1 and a second call returns 0 (idempotent).</li>
+                    <li><strong>apply_default_metadata respects user-set values</strong> <code>[component-couple]</code> &mdash; presets body_height/mass; asserts the function returns 0 and the values are untouched.</li>
+                    <li><strong>component_power_to_joule_source stamps a top-side component</strong> <code>[component-couple]</code> &mdash; runs the coupling on a 1 W SOIC-8 on a 16x16x8 grid; asserts ok, total_power_w==1.0, the volume integral equals 1.0, k=0 stays zero and k_top has &gt; 0 power.</li>
+                    <li><strong>component_power_to_joule_source skips zero-power parts</strong> <code>[component-couple]</code> &mdash; adds a zero-power resistor; asserts every source cell is 0.</li>
+                    <li><strong>compute_component_summary tallies mass + power + hottest</strong> <code>[component-couple]</code> &mdash; adds three components (U1, U2, R5); asserts n_components==3, total_power=2.76, hottest_reference==&quot;U2&quot; and hottest_power==2.50.</li>
+                    <li><strong>summary uses PackageDefaults mass when component has no mass set</strong> <code>[component-couple]</code> &mdash; adds a pin header with mass=0; asserts total_mass_kg &gt; 0 via the package-default fallback.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-elasticity-test-cpp">
+                <h3>mpkit/tests/elasticity_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Uniaxial compression with nu=0 reproduces sigma_xx = E u_x / L</strong> <code>[no tag]</code> &mdash; 8x4x4 cube with E=100 GPa, nu=0, 10um compression; asserts sigma_xx matches E*delta/L within 1% and sigma_yy/zz are &lt; 0.1%.</li>
+                    <li><strong>Constrained uniform heat: sigma = -E alpha dT / (1 - 2 nu) hydrostatic</strong> <code>[no tag]</code> &mdash; 6x6x6 fully clamped cube with dT=50; asserts each diagonal stress is the hydrostatic value within 2% and shears &lt; 0.1%.</li>
+                    <li><strong>Rejected configuration: no Dirichlet pin returns an error</strong> <code>[no tag]</code> &mdash; runs without BCs; asserts r.ok is false and the error mentions &quot;Dirichlet pin&quot;.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-grid-test-cpp">
+                <h3>mpkit/tests/grid_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Grid cell-centre + world_to_index round trip</strong> <code>[no tag]</code> &mdash; builds a 10x8x4 grid; asserts voxel_count==320, cx/cy/cz return the cell centres and every world-&gt;index call recovers the original (i, j, k).</li>
+                    <li><strong>Grid world_to_index returns -1 for out-of-grid axes</strong> <code>[no tag]</code> &mdash; queries (-1, 0.5mm, 0.5mm) and (0.5mm, 0.5mm, 99); asserts the out-of-range axis returns -1.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-joule-coupling-test-cpp">
+                <h3>mpkit/tests/joule_coupling_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Single resistor across one cell deposits the right total power</strong> <code>[no tag]</code> &mdash; two-node mesh with G=2.5 and 1 V drop; asserts total_power_w == 2.5 and half the power lands in each endpoint voxel.</li>
+                    <li><strong>Resistor whose node sits outside the grid is dropped, not crashed</strong> <code>[no tag]</code> &mdash; places one node far outside; asserts dropped_nodes==1 and the kept endpoint still gets its half-share.</li>
+                    <li><strong>Node on a layer not in layer_ordinal_to_k is dropped</strong> <code>[no tag]</code> &mdash; places node 1 on layer 31 with no mapping; asserts dropped_nodes==1.</li>
+                    <li><strong>Empty mesh yields an all-zero source field, not an error</strong> <code>[no tag]</code> &mdash; runs on an empty IrMesh; asserts ok, total_power==0 and every source cell is 0.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-material-test-cpp">
+                <h3>mpkit/tests/material_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Copper has plausible engineering numbers</strong> <code>[no tag]</code> &mdash; queries <code>copper()</code>; asserts thermal_conductivity in (350, 450), density &gt; 8000 and resistivity in (1e-8, 3e-8).</li>
+                    <li><strong>Air properties present and not copper</strong> <code>[no tag]</code> &mdash; queries <code>air()</code>; asserts conductivity &lt; 0.1, density &lt; 2, youngs_modulus is NaN.</li>
+                    <li><strong>material_by_name is case-insensitive + recognises aliases</strong> <code>[no tag]</code> &mdash; looks up &quot;copper&quot;, &quot;COPPER&quot;, &quot;aluminum&quot; and &quot;aluminium&quot;; asserts each returns the matching material and an unknown name throws.</li>
+                    <li><strong>material_names lists the canonical set without alias duplicates</strong> <code>[no tag]</code> &mdash; queries material_names; asserts copper/fr4/air are present, exactly one &quot;aluminium&quot; entry, no &quot;aluminum&quot; entry and the list is sorted.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-steady-heat-test-cpp">
+                <h3>mpkit/tests/steady_heat_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>1D conduction between two Dirichlet faces matches the linear analytical T(x) = T0 + (T1 - T0) * x / L</strong> <code>[no tag]</code> &mdash; 32 cells of copper with walls at 0 and 100 C; asserts every cell-centre T matches the linear profile within 2 C.</li>
+                    <li><strong>1D conduction with a uniform volumetric source matches the parabolic T(x) = T_wall + Q L^2 / (8 k) at the centre</strong> <code>[no tag]</code> &mdash; 64 cells, Q=1 MW/m^3, walls at 0; asserts the centre T matches Q*L^2/(8k) within 5%.</li>
+                    <li><strong>Series copper / FR-4 slab respects harmonic-mean conductivity at the material interface</strong> <code>[no tag]</code> &mdash; half copper / half FR-4 slab with walls 100 and 0 C; asserts the cold-side interface cell matches the analytic series-resistance value within 1 C and the hot side is &gt; 99 C.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-study-run-test-cpp">
+                <h3>mpkit/tests/study_run_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Single-node study: SteadyHeat with two Dirichlet walls runs and produces a temperature field</strong> <code>[no tag]</code> &mdash; runs a 1-node Steady heat study; asserts r.ok, 1 step, ok step, T[last] &gt; 80 and T[0] &lt; 20.</li>
+                    <li><strong>Sweep iteration patches the targeted config field per step</strong> <code>[no tag]</code> &mdash; adds a SweepSpec over the first bc value with three values; asserts 3 steps with sweep_index[0..2] and the boundary cell tracks the swept value.</li>
+                    <li><strong>Unknown PhysicsKind dispatch reports a clear error</strong> <code>[no tag]</code> &mdash; runs a study with PhysicsKind::Elasticity; asserts ok==false and the error mentions &quot;not yet dispatched&quot;.</li>
+                    <li><strong>PdnIrDrop without a Board fails fast with a helpful message</strong> <code>[no tag]</code> &mdash; runs a PdnIrDrop study with board=nullptr; asserts ok==false and the error mentions &quot;board is null&quot;.</li>
+                    <li><strong>Two-axis full factorial sweep walks the cartesian product and records a 2-D sweep_index per step</strong> <code>[no tag]</code> &mdash; adds two sweeps (2 vs 3 values); asserts 6 steps and the (i, j) indices follow odometer order with sweep 0 fastest.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-study-test-cpp">
+                <h3>mpkit/tests/study_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Study sexpr round-trip preserves every field</strong> <code>[no tag]</code> &mdash; serialises a Study with 2 nodes + 1 coupling + 1 sweep + 1 result file; asserts every field round-trips through <code>study_to_sexpr</code>/<code>study_from_sexpr</code>.</li>
+                    <li><strong>save_study + load_study on disk round-trips identically</strong> <code>[no tag]</code> &mdash; saves a Study to a temp dir; asserts the file exists and loading recovers the name and elasticity node.</li>
+                    <li><strong>FieldIO save + load preserves shape, spacing and every value</strong> <code>[no tag]</code> &mdash; writes a 4x3x2 Grid+Field and re-loads; asserts every dimension, dx, x0 and every cell value matches.</li>
+                    <li><strong>FieldIO rejects bad magic with a clear error</strong> <code>[no tag]</code> &mdash; writes a file with garbage magic; asserts <code>load_field</code> throws std::runtime_error.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-thermoelectric-test-cpp">
+                <h3>mpkit/tests/thermoelectric_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Copper has the expected ~+1.8 uV/K room-temperature Seebeck</strong> <code>[no tag]</code> &mdash; queries copper().seebeck_coefficient; asserts the value is in (1e-6, 3e-6).</li>
+                    <li><strong>Type-K thermocouple (chromel / alumel) recovers a sensitivity near the published ~41 uV/K average</strong> <code>[no tag]</code> &mdash; evaluates thermocouple_emf(chromel, alumel, 100, 0); asserts the value matches 4.37 mV within 0.1 mV.</li>
+                    <li><strong>Seebeck EMF along a path is independent of intermediate uniform segments (Magnus principle)</strong> <code>[no tag]</code> &mdash; compares one-segment vs five-segment paths between 0 and 100; asserts the two EMFs match within 1e-12 and both equal S*100.</li>
+                    <li>**Closed thermocouple loop &mdash; hot junction at T_h, cold ends at T_c -- gives (S_a - S_b)*(T_h - T_c)** `[no tag]` -- traverses chromel-alumel loop; asserts v_loop == thermocouple_emf within 1e-12.</li>
+                    <li><strong>Peltier coefficient Pi = S * T at the given absolute temperature</strong> <code>[no tag]</code> &mdash; evaluates at T=300; asserts the result equals S*T within 1e-15.</li>
+                    <li><strong>Peltier junction flux uses Pi_a - Pi_b times the normal current density and flips sign with current direction</strong> <code>[no tag]</code> &mdash; evaluates copper/bismuth junction at j=+/-1e5; asserts q(+) + q(-) == 0 within 1e-15 and |q| in (2e3, 2.5e3).</li>
+                    <li><strong>Thomson volumetric heat returns zero everywhere under v1&#x27;s constant-Seebeck assumption (placeholder API)</strong> <code>[no tag]</code> &mdash; evaluates on a 2x2x1 grid; asserts dimensions match and every cell is 0.</li>
+                    <li><strong>New library materials are reachable through material_by_name</strong> <code>[no tag]</code> &mdash; queries iron/chromel/alumel/constantan/bismuth; asserts each returns the right name with a finite Seebeck coefficient.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-transient-heat-test-cpp">
+                <h3>mpkit/tests/transient_heat_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Transient bar with both ends Dirichlet relaxes to the steady linear profile</strong> <code>[no tag]</code> &mdash; 32-cell bar with walls 0/100 and initial uniform 50, run for 10*tau1 in 200 steps; asserts every cell matches the linear steady profile within 2 C.</li>
+                    <li><strong>Transient bar with insulated ends + sinusoidal initial condition decays at the analytical first-mode rate</strong> <code>[no tag]</code> &mdash; 64-cell bar with Neumann walls and cos(pi*x/L) initial; asserts the bar-edge ratio matches exp(-rate1*t_final) within 8%.</li>
+                </ul>
+            </div>
+            <div class="file-block" id="mpkit-tests-voxelizer-test-cpp">
+                <h3>mpkit/tests/voxelizer_test.cpp</h3>
+                <ul class="test-list">
+                    <li><strong>Empty board produces a single-voxel air grid</strong> <code>[no tag]</code> &mdash; voxelizes an empty Board; asserts voxel_count==1 and ids[0]==kAirMaterialId.</li>
+                    <li><strong>Tiny board: copper appears, substrate fills the bulk</strong> <code>[no tag]</code> &mdash; voxelizes a 3-layer board with one F.Cu segment at 100um cells; asserts air, substrate and copper are all present in ids.</li>
+                    <li><strong>Voxelizer grid bbox spans the trace plus the air padding</strong> <code>[no tag]</code> &mdash; voxelizes with 3 padding cells; asserts the grid bbox starts before x=1mm - half-width - pad and ends after x=5mm + half-width + pad.</li>
+                </ul>
+            </div>
+        </article>
+
+    </section>
+</main>
+
+<footer>
+    <p>
+        circuitcore is free software, licensed under GPL-3.0.
+        Source on <a href="https://github.com/UnsignedChad/circuitcore">GitHub</a>.
+    </p>
+</footer>
+
+<script>
+// Live filter. Hide list items whose text does not match the query;
+// also hide file blocks and section articles whose visible-child
+// count drops to zero.
+(function () {
+    var input = document.getElementById('searchbox');
+    var counter = document.getElementById('searchcount');
+    var allTests = Array.prototype.slice.call(document.querySelectorAll('.test-list li'));
+    var allFiles = Array.prototype.slice.call(document.querySelectorAll('.file-block'));
+    var allSections = Array.prototype.slice.call(document.querySelectorAll('.newsblock'));
+
+    // pre-cache lowercase text content for each test li
+    allTests.forEach(function (li) {
+        li._txt = li.textContent.toLowerCase();
+    });
+
+    function refilter() {
+        var q = input.value.trim().toLowerCase();
+        var shown = 0;
+        allTests.forEach(function (li) {
+            var ok = !q || li._txt.indexOf(q) !== -1;
+            if (ok) { li.classList.remove('hidden'); shown++; }
+            else    { li.classList.add('hidden'); }
+        });
+        allFiles.forEach(function (f) {
+            var any = f.querySelector('.test-list li:not(.hidden)');
+            if (any) f.classList.remove('hidden');
+            else     f.classList.add('hidden');
+        });
+        allSections.forEach(function (s) {
+            // skip the intro block which is also .newsblock-ish in some
+            // layouts; we keyed off article elements.
+            var any = s.querySelector('.file-block:not(.hidden)');
+            if (any) s.classList.remove('hidden');
+            else     s.classList.add('hidden');
+        });
+        counter.textContent = shown + ' tests shown';
+    }
+
+    input.addEventListener('input', refilter);
+})();
+</script>
+
+</body>
+</html>
